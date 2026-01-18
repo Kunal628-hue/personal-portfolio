@@ -100,22 +100,11 @@ const Hero = () => {
                     className="pointer-events-auto flex flex-col md:flex-row gap-4 justify-center items-center"
                 >
                     <MagneticWrapper className="block">
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => alert("Resume download logic")}
-                            className="bg-white text-black font-bold py-4 px-10 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-all"
-                        >
-                            Download Resume
-                        </motion.button>
-                    </MagneticWrapper>
-
-                    <MagneticWrapper className="block">
                         <motion.a
                             href="#projects"
                             whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
                             whileTap={{ scale: 0.95 }}
-                            className="bg-transparent border border-white/30 text-white font-bold py-4 px-10 rounded-full backdrop-blur-md transition-all block"
+                            className="bg-transparent border border-white/30 text-white font-bold py-4 px-16 rounded-full backdrop-blur-md transition-all block min-w-[200px]"
                         >
                             View Work
                         </motion.a>

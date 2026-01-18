@@ -34,12 +34,7 @@ const Navbar = () => {
                                     </a>
                                 </MagneticWrapper>
                             ))}
-                            <button
-                                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all"
-                                onClick={() => alert("Resume download logic here")}
-                            >
-                                Resume
-                            </button>
+
                         </div>
                     </div>
 
@@ -68,12 +63,7 @@ const Navbar = () => {
                                 {item.name}
                             </a>
                         ))}
-                        <button
-                            className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-blue-400 hover:bg-white/10"
-                            onClick={() => alert("Resume download logic here")}
-                        >
-                            Download Resume
-                        </button>
+
                     </div>
                 </div>
             )}

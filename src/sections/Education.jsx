@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, BookOpen, School, Atom } from 'lucide-react';
 import { Canvas } from '@react-three/fiber';
-import { Float, Icosahedron, MeshDistortMaterial } from '@react-three/drei';
+import { Float, Icosahedron, MeshDistortMaterial, Torus, OrbitControls, Stars } from '@react-three/drei';
 
 const EducationCard = ({ icon: Icon, title, period, school, description, tags, delay, color }) => (
     <motion.div
@@ -40,20 +40,44 @@ const EducationCard = ({ icon: Icon, title, period, school, description, tags, d
 
 const FloatingGeo = () => {
     return (
-        <Canvas>
-            <ambientLight intensity={0.5} />
-            <directionalLight position={[10, 10, 5]} />
-            <Float speed={4} rotationIntensity={1} floatIntensity={2}>
-                <Icosahedron args={[1, 0]}>
-                    <MeshDistortMaterial
+        <Canvas camera={{ position: [0, 0, 6] }}>
+            <ambientLight intensity={1.5} />
+            <pointLight position={[10, 10, 10]} intensity={2} color="#3b82f6" />
+            <pointLight position={[-10, -10, -10]} intensity={1} color="#a855f7" />
+            <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
+
+            <Float speed={2} rotationIntensity={2} floatIntensity={1}>
+                {/* Outer Wireframe */}
+                <Icosahedron args={[2.2, 2]}>
+                    <meshStandardMaterial
                         color="#3b82f6"
                         wireframe
-                        distort={0.4}
-                        speed={2}
+                        transparent
+                        opacity={0.3}
                         roughness={0}
+                        metalness={1}
+                    />
+                </Icosahedron>
+
+                {/* Inner Glowing Core */}
+                <Icosahedron args={[1.5, 4]}>
+                    <MeshDistortMaterial
+                        color="#60a5fa"
+                        distort={0.4}
+                        speed={3}
+                        roughness={0.2}
+                        metalness={0.8}
                     />
                 </Icosahedron>
             </Float>
+
+            <Float speed={1.5} rotationIntensity={1.5} floatIntensity={2}>
+                <Torus args={[3, 0.05, 16, 100]} rotation={[1.5, 0, 0]}>
+                    <meshStandardMaterial color="#a855f7" emissive="#a855f7" emissiveIntensity={2} />
+                </Torus>
+            </Float>
+
+            <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} />
         </Canvas>
     );
 };

@@ -90,7 +90,7 @@ const Contact = () => {
 
                 <div className="mt-20 text-center border-t border-white/10 pt-8">
                     <p className="text-gray-500 text-sm">
-                        Designed & Built with ❤️ by Kunal Singhi
+                        Built using modern web technologies · Kunal Singhi
                     </p>
                 </div>
             </div>

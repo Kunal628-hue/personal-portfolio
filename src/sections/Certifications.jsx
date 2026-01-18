@@ -17,7 +17,7 @@ const certifications = [
     },
     {
         title: "Robotics Foundation",
-        issuer: "Course Certification",
+        issuer: "Specialization",
         date: "2023",
         color: "from-red-500 to-orange-500"
     },

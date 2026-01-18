@@ -51,11 +51,8 @@ const CyberFooter = () => {
             </div>
 
             <div className="relative z-10 h-full flex flex-col justify-end pb-8 items-center text-center pointer-events-none">
-                <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-purple-600 mb-2 font-mono">
-                    SYSTEM_SHUTDOWN // COMPLETED
-                </h3>
-                <p className="text-gray-500 text-xs font-mono">
-                    &copy; {new Date().getFullYear()} Kunal Singhi. Executing Portfolio.exe
+                <p className="text-gray-400 text-sm font-sans mb-12">
+
                 </p>
             </div>
 
