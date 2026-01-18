@@ -31,15 +31,12 @@ const Education = () => {
                                 <h3 className="text-2xl font-bold">Bachelor of Technology in Computer Science</h3>
                                 <span className="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-bold rounded-full w-fit">2025 - Present</span>
                             </div>
-                            <p className="text-lg text-gray-300 mb-4">Institute of Technology & Science (Placeholder)</p>
+                            <p className="text-lg text-gray-300 mb-4">Polaris School of Technology</p>
                             <p className="text-gray-400 leading-relaxed mb-6">
                                 Currently in first year, building a strong foundation in programming, data structures, and computer architecture.
                             </p>
 
-                            <div className="flex gap-2 flex-wrap">
-                                <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-gray-300">CGPA: 9.0 (Current)</span>
-                                <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-gray-300">CS Club Member</span>
-                            </div>
+                            {/* <div className="flex gap-2 flex-wrap"> Removed per user request </div> */}
                         </div>
                     </motion.div>
                 </div>

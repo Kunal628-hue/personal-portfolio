@@ -5,7 +5,7 @@ import * as THREE from 'three';
 
 const Word = ({ children, ...props }) => {
     const color = new THREE.Color();
-    const fontProps = { fontSize: 2.5, letterSpacing: -0.05, lineHeight: 1, 'material-toneMapped': false }
+    const fontProps = { fontSize: 2.2, letterSpacing: -0.05, lineHeight: 1, 'material-toneMapped': false }
     const ref = useRef()
     const [hovered, setHovered] = useState(false)
     const over = (e) => (e.stopPropagation(), setHovered(true))
@@ -25,7 +25,7 @@ const Word = ({ children, ...props }) => {
     return <Text ref={ref} onPointerOver={over} onPointerOut={out} onClick={() => console.log('clicked')} {...props} {...fontProps} children={children} />
 }
 
-const Cloud = ({ count = 4, radius = 20, words }) => {
+const Cloud = ({ count = 4, radius = 23, words }) => {
     // Create a spherical distribution
     const keywords = useMemo(() => {
         const temp = []
@@ -52,13 +52,13 @@ const Cloud = ({ count = 4, radius = 20, words }) => {
 
 const TagCloud = () => {
     const skills = [
-        "React", "Three.js", "GSAP", "Tailwind", "JavaScript", "HTML", "CSS", "Node.js", "Git", "GitHub", "Figma",
-        "Framer", "Vite", "Next.js", "Firebase", "Python", "C++", "Java", "SQL", "Redux"
+        "Python", "Java", "HTML", "CSS", "JS", "React", "Git", "GitHub", "SQL", "Robotics",
+        "Bootstrap", "Tailwind", "Arduino", "Figma", "Next.js", "Firebase"
     ];
 
     return (
-        <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 35], fov: 90 }}>
-            <fog attach="fog" args={['#202025', 0, 80]} />
+        <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 40], fov: 90 }}>
+            <fog attach="fog" args={['#000000', 35, 100]} />
             <Cloud words={skills} />
             <TrackballControls noZoom />
         </Canvas>

@@ -18,27 +18,25 @@ const About = () => {
                             About Me
                         </h2>
                         <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-                            I am a first-year B.Tech Computer Science student with a strong passion for building web applications.
-                            My journey began with a curiosity about how things work on the internet, which quickly turned into a love for coding and design.
+                            I am a first-year B.Tech Computer Science student with a strong interest in building practical software solutions. My journey into technology started with curiosity about how systems work, which gradually expanded into programming, problem-solving, and robotics.
                         </p>
                         <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-                            I'm currently focused on mastering modern frontend technologies like React and Tailwind CSS, while also exploring backend development with Node.js.
-                            My goal is to create meaningful digital experiences that solve real-world problems.
+                            I work with languages and tools like Python, Java, SQL, and modern web technologies, and I enjoy applying logic to real-world challenges—whether through software applications, data-driven systems, or robotics projects. I am continuously learning and experimenting to build a strong foundation for future roles in software and technology.
                         </p>
 
                         <div className="flex gap-4">
                             <div className="flex items-center gap-2 p-4 bg-white/5 rounded-lg border border-white/10">
                                 <GraduationCap className="text-blue-400" />
                                 <div>
-                                    <h4 className="font-bold">B.Tech CSE</h4>
-                                    <p className="text-sm text-gray-400">2025 - 2029</p>
+                                    <h4 className="font-bold">Computer Science</h4>
+                                    <p className="text-sm text-gray-400">Student</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-2 p-4 bg-white/5 rounded-lg border border-white/10">
                                 <Code className="text-purple-400" />
                                 <div>
-                                    <h4 className="font-bold">Web Dev</h4>
-                                    <p className="text-sm text-gray-400">Passionate Builder</p>
+                                    <h4 className="font-bold">Core Focus</h4>
+                                    <p className="text-sm text-gray-400">Programming • Systems • Robotics</p>
                                 </div>
                             </div>
                         </div>
@@ -57,15 +55,15 @@ const About = () => {
                             <ul className="space-y-4">
                                 <li className="flex items-start gap-3">
                                     <span className="w-2 h-2 mt-2 rounded-full bg-blue-500" />
-                                    <span className="text-gray-300">Turning complex problems into simple, beautiful interfaces.</span>
+                                    <span className="text-gray-300">Solving logical and real-world problems through code and systems thinking</span>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <span className="w-2 h-2 mt-2 rounded-full bg-purple-500" />
-                                    <span className="text-gray-300">Constantly learning new tools and frameworks to stay ahead.</span>
+                                    <span className="text-gray-300">Building software, robotics projects, and experiments that connect theory with practice</span>
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <span className="w-2 h-2 mt-2 rounded-full bg-pink-500" />
-                                    <span className="text-gray-300">Contributing to open source and collaborating with others.</span>
+                                    <span className="text-gray-300">Exploring technology, markets, and data to understand how systems behave and evolve</span>
                                 </li>
                             </ul>
                         </div>

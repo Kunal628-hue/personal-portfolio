@@ -5,15 +5,15 @@ import { Briefcase, Calendar } from 'lucide-react';
 const experiences = [
     {
         role: "Hackathon Participant",
-        company: "TechNova 2025",
-        period: "Nov 2025",
-        description: "Participated in a 24-hour hackathon focused on AI solutions. Built a prototype for automated study scheduling."
+        company: "MLH (Major League Hacking)",
+        period: "15 Nov 2025",
+        description: "Participated in a competitive hackathon focused on rapid prototyping and innovation."
     },
     {
-        role: "Frontend Development Workshop",
-        company: "College Tech Club",
-        period: "Sept 2025",
-        description: "Completed a 2-week intensive workshop on modern React patterns and state management."
+        role: "Microsoft AI Workshop",
+        company: "Microsoft",
+        period: "5 Jan 2026",
+        description: "Intensive workshop covering Azure AI services, cognitive computing, and building intelligent apps."
     }
 ];
 

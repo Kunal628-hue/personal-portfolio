@@ -85,10 +85,10 @@ const Hero = () => {
                     <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-25"></div>
                     <div className="relative">
                         <h3 className="text-2xl md:text-4xl font-bold text-gray-100 mb-6 tracking-tight">
-                            Building <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Digital Universes</span>
+                            Turning Code into <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Real-World Solutions</span>
                         </h3>
                         <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-                            B.Tech CSE Student, Creative Developer & <span className="text-green-400 font-semibold">Trader</span> crafting immersive web experiences.
+                            B.Tech CSE Student | Software & Robotics Enthusiast building real-world solutions
                         </p>
                     </div>
                 </motion.div>

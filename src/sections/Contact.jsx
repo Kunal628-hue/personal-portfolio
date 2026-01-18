@@ -22,7 +22,7 @@ const Contact = () => {
                     {/* Contact Links */}
                     <div className="w-full md:w-1/2 flex flex-col gap-6">
                         <motion.a
-                            href="mailto:student@example.com"
+                            href="mailto:imsinghi2016@gmail.com"
                             initial={{ x: -50, opacity: 0 }}
                             whileInView={{ x: 0, opacity: 1 }}
                             whileHover={{ scale: 1.02 }}
@@ -33,12 +33,14 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h3 className="text-lg font-bold">Email</h3>
-                                <p className="text-gray-400 text-sm">student@example.com</p>
+                                <p className="text-gray-400 text-sm">imsinghi2016@gmail.com</p>
                             </div>
                         </motion.a>
 
                         <motion.a
-                            href="#"
+                            href="https://www.linkedin.com/in/kunal-singhi-jain-2b3329386/"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             initial={{ x: -50, opacity: 0 }}
                             whileInView={{ x: 0, opacity: 1 }}
                             transition={{ delay: 0.1 }}
@@ -55,7 +57,9 @@ const Contact = () => {
                         </motion.a>
 
                         <motion.a
-                            href="#"
+                            href="https://github.com/Kunal628-hue"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             initial={{ x: -50, opacity: 0 }}
                             whileInView={{ x: 0, opacity: 1 }}
                             transition={{ delay: 0.2 }}
