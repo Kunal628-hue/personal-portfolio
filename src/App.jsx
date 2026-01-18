@@ -13,6 +13,7 @@ import Education from './sections/Education';
 import Certifications from './sections/Certifications';
 import Contact from './sections/Contact';
 import Trading from './sections/Trading';
+import Activities from './sections/Activities';
 import StockTicker from './components/StockTicker';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <About />
         <Skills />
         <Projects />
+        <Activities />
         <Trading />
         <Experience />
         <Education />

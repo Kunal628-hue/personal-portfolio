@@ -1,44 +1,139 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { GraduationCap, BookOpen } from 'lucide-react';
+import { GraduationCap, BookOpen, School, Atom } from 'lucide-react';
+import { Canvas } from '@react-three/fiber';
+import { Float, Icosahedron, MeshDistortMaterial } from '@react-three/drei';
+
+const EducationCard = ({ icon: Icon, title, period, school, description, tags, delay, color }) => (
+    <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay }}
+        className="bg-white/5 p-8 rounded-2xl border border-white/10 flex flex-col md:flex-row gap-6 items-start hover:border-white/20 transition-colors"
+    >
+        <div className={`p-4 bg-${color}-600/20 rounded-xl`}>
+            <Icon className={`text-${color}-400`} size={32} />
+        </div>
+        <div>
+            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mb-2">
+                <h3 className="text-xl md:text-2xl font-bold text-white">{title}</h3>
+                <span className={`px-3 py-1 bg-${color}-500/20 text-${color}-300 text-xs font-bold rounded-full w-fit whitespace-nowrap`}>
+                    {period}
+                </span>
+            </div>
+            <p className="text-lg text-gray-300 mb-4">{school}</p>
+            <p className="text-gray-400 leading-relaxed mb-4 text-sm md:text-base">
+                {description}
+            </p>
+            {tags && (
+                <div className="flex gap-2 flex-wrap">
+                    {tags.map((tag, i) => (
+                        <span key={i} className="px-3 py-1 bg-white/10 rounded-full text-xs text-gray-300">
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            )}
+        </div>
+    </motion.div>
+);
+
+const FloatingGeo = () => {
+    return (
+        <Canvas>
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[10, 10, 5]} />
+            <Float speed={4} rotationIntensity={1} floatIntensity={2}>
+                <Icosahedron args={[1, 0]}>
+                    <MeshDistortMaterial
+                        color="#3b82f6"
+                        wireframe
+                        distort={0.4}
+                        speed={2}
+                        roughness={0}
+                    />
+                </Icosahedron>
+            </Float>
+        </Canvas>
+    );
+};
 
 const Education = () => {
     return (
-        <section id="education" className="py-20 bg-black text-white">
+        <section id="education" className="py-20 bg-black text-white relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="mb-12"
-                >
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4">Education</h2>
-                    <p className="text-gray-400">My academic background.</p>
-                </motion.div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
-                <div className="grid grid-cols-1 gap-8">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="bg-white/5 p-8 rounded-2xl border border-white/10 flex flex-col md:flex-row gap-6 items-start"
-                    >
-                        <div className="p-4 bg-blue-600/20 rounded-xl">
-                            <GraduationCap className="text-blue-400" size={32} />
+                    {/* Content Column */}
+                    <div className="lg:col-span-2 space-y-8">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <h2 className="text-3xl md:text-5xl font-bold mb-4">Education <span className="text-blue-500">&</span> Learning</h2>
+                            <p className="text-gray-400">My academic journey and milestones.</p>
+                        </motion.div>
+
+                        <div className="space-y-6">
+                            {/* B.Tech */}
+                            <EducationCard
+                                icon={GraduationCap}
+                                title="B.Tech Computer Science"
+                                period="2025 - Present"
+                                school="Polaris School of Technology"
+                                description="Currently in first year, building a strong foundation in programming, data structures, and computer architecture."
+                                color="blue"
+                                delay={0.1}
+                            />
+
+                            {/* Class XI-XII */}
+                            <EducationCard
+                                icon={School}
+                                title="Senior Secondary (XI–XII)"
+                                period="Science Stream"
+                                school="St. Mary’s Junior College, Hyderabad"
+                                description="Focused on Physics, Chemistry, and Mathematics (PCM). Balanced board curriculum with competitive exam preparation."
+                                tags={["PCM", "Competitive Prep"]}
+                                color="purple"
+                                delay={0.2}
+                            />
+
+                            {/* JEE Coaching */}
+                            <EducationCard
+                                icon={Atom}
+                                title="JEE Preparation"
+                                period="Coaching"
+                                school="Physics Wallah (PW)"
+                                description="Intensive preparation in Physics, Chemistry, and Math. Developed strong problem-solving discipline and conceptual clarity."
+                                tags={["Problem Solving", "Analytical Skills"]}
+                                color="yellow"
+                                delay={0.3}
+                            />
+
+                            {/* Class X */}
+                            <EducationCard
+                                icon={BookOpen}
+                                title="Secondary Education (Class X)"
+                                period="Schooling"
+                                school="Gitanjali Devshala, Hyderabad"
+                                description="Built a strong academic foundation with active participation in extracurriculars."
+                                color="pink"
+                                delay={0.4}
+                            />
                         </div>
-                        <div>
-                            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mb-2">
-                                <h3 className="text-2xl font-bold">Bachelor of Technology in Computer Science</h3>
-                                <span className="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-bold rounded-full w-fit">2025 - Present</span>
+                    </div>
+
+                    {/* 3D Visual Column (Desktop) */}
+                    <div className="hidden lg:block lg:col-span-1 relative h-full min-h-[500px]">
+                        <div className="sticky top-20 h-[500px] w-full">
+                            <FloatingGeo />
+                            <div className="absolute bottom-10 left-0 right-0 text-center">
+                                <p className="text-blue-400 font-mono text-sm tracking-widest">KNOWLEDGE STRUCTURE</p>
                             </div>
-                            <p className="text-lg text-gray-300 mb-4">Polaris School of Technology</p>
-                            <p className="text-gray-400 leading-relaxed mb-6">
-                                Currently in first year, building a strong foundation in programming, data structures, and computer architecture.
-                            </p>
-
-                            {/* <div className="flex gap-2 flex-wrap"> Removed per user request </div> */}
                         </div>
-                    </motion.div>
+                    </div>
+
                 </div>
             </div>
         </section>

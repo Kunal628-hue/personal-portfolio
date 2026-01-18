@@ -10,22 +10,28 @@ import { Float, Center, Text3D } from '@react-three/drei';
 
 const certifications = [
     {
-        title: "Responsive Web Design",
-        issuer: "freeCodeCamp",
-        date: "Aug 2025",
-        color: "from-orange-500 to-red-500"
+        title: "Python Programming",
+        issuer: "Course Certification",
+        date: "2024",
+        color: "from-blue-500 to-yellow-500"
     },
     {
-        title: "JS Algorithms & DSA",
-        issuer: "freeCodeCamp",
-        date: "Oct 2025",
-        color: "from-yellow-400 to-yellow-600"
+        title: "Robotics Foundation",
+        issuer: "Course Certification",
+        date: "2023",
+        color: "from-red-500 to-orange-500"
     },
     {
-        title: "React Specialist",
-        issuer: "Meta (Coursera)",
-        date: "Dec 2025",
-        color: "from-blue-400 to-cyan-500"
+        title: "Data Science",
+        issuer: "Professional Certificate",
+        date: "2025",
+        color: "from-green-400 to-emerald-600"
+    },
+    {
+        title: "AI & Machine Learning",
+        issuer: "Advanced Course",
+        date: "2026",
+        color: "from-purple-500 to-pink-500"
     }
 ];
 
