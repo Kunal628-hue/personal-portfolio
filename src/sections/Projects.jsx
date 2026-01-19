@@ -4,32 +4,62 @@ import { Github, ExternalLink, Folder } from 'lucide-react';
 
 const projects = [
     {
+        title: "Global Notes Workspace",
+        description: "A persistent notes workspace featuring search functionality and a tagging system for efficient note organization.",
+        tags: ["HTML", "CSS", "JavaScript"],
+        links: {
+            github: "https://github.com/aneek22112007-tech/OJT-2025-Persistent-Notes-Workspace-with-Search-Tags.git",
+            demo: "https://ojt-2025-persistent-notes-workspace-three.vercel.app/index.html"
+        }
+    },
+    {
         title: "Personal Portfolio",
         description: "A high-performance, 3D animated portfolio website built with React, Three.js, and Tailwind CSS. Features smooth scroll animations and responsive design.",
-        tags: ["React", "Three.js", "Tailwind", "Framer Motion"],
-        links: { github: "#", demo: "#" }
+        tags: ["HTML", "CSS", "React", "Tailwind", "JSON"],
+        links: {
+            github: "https://github.com/Kunal628-hue/personal-portfolio.git",
+            demo: "https://personal-portfolio-kunal.netlify.app/"
+        }
     },
     {
-        title: "Task Master (To-Do App)",
-        description: "A sleek todo application with local storage persistence, drag-and-drop reorganization, and category filtering.",
-        tags: ["React", "LocalStorage", "CSS Modules"],
-        links: { github: "#", demo: "#" }
+        title: "Singhi Ghar Khata",
+        description: "A comprehensive house expense management system designed to track daily household expenses and manage budget efficiently.",
+        tags: ["HTML", "CSS", "JavaScript", "JSON", "Chart.js"],
+        links: {
+            github: "https://github.com/Kunal628-hue/Singhi-GharKhata.git",
+            demo: "https://starlit-longma-c9ea99.netlify.app/"
+        }
     },
     {
-        title: "Expense Tracker",
-        description: "Visual expense tracking dashboard using Charts.js to visualize spending habits. Includes income/expense management.",
-        tags: ["JavaScript", "Chart.js", "Firebase"],
-        links: { github: "#", demo: "#" }
-    },
-    {
-        title: "Smart Notes",
-        description: "A markdown-supported notes application with search functionality and tag organization system.",
-        tags: ["React", "Markdown", "Search Algo"],
-        links: { github: "#", demo: "#" }
+        title: "Personal Finance Manager",
+        description: "A secure and user-friendly personal finance manager to track income, expenses, and savings with login authentication.",
+        tags: ["HTML", "CSS", "JavaScript", "Chart.js", "JSON"],
+        links: {
+            github: "https://github.com/Kunal628-hue/Personal-finance-manager.git",
+            demo: "https://spiffy-chaja-8af14c.netlify.app/login.html"
+        }
     }
 ];
 
-const ProjectCard = ({ project, index }) => {
+const arduinoProjects = [
+    {
+        title: "Automatic Plant Watering System",
+        description: "IoT-based system that monitors soil moisture and automatically waters plants when needed.",
+        tags: ["Arduino", "C++", "Sensors"]
+    },
+    {
+        title: "Obstacle Avoiding Robot",
+        description: "Autonomous robot vehicle capable of detecting and navigating around obstacles using ultrasonic sensors.",
+        tags: ["Arduino", "Robotics", "Ultrasonic Sensor"]
+    },
+    {
+        title: "Fire Safety System",
+        description: "Automated fire detection and alarm system using flame and smoke sensors for early warning.",
+        tags: ["Arduino", "Safety", "IoT"]
+    }
+];
+
+const ProjectCard = ({ project, index, compact = false }) => {
     const ref = useRef(null);
 
     const x = useMotionValue(0);
@@ -86,22 +116,24 @@ const ProjectCard = ({ project, index }) => {
 
             <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-            <div className="p-8 relative z-10 flex flex-col h-full" style={{ transform: "translateZ(50px)" }}>
+            <div className={`${compact ? 'p-6' : 'p-8'} relative z-10 flex flex-col h-full`} style={{ transform: "translateZ(50px)" }}>
                 <div className="flex justify-between items-start mb-6">
                     <div className="p-3 bg-blue-500/20 rounded-lg">
-                        <Folder className="text-blue-400" size={24} />
+                        <Folder className="text-blue-400" size={compact ? 20 : 24} />
                     </div>
-                    <div className="flex gap-4">
-                        <a href={project.links.github} className="text-gray-400 hover:text-white transition-colors">
-                            <Github size={20} />
-                        </a>
-                        <a href={project.links.demo} className="text-gray-400 hover:text-white transition-colors">
-                            <ExternalLink size={20} />
-                        </a>
-                    </div>
+                    {project.links && (
+                        <div className="flex gap-4">
+                            <a href={project.links.github} className="text-gray-400 hover:text-white transition-colors">
+                                <Github size={20} />
+                            </a>
+                            <a href={project.links.demo} className="text-gray-400 hover:text-white transition-colors">
+                                <ExternalLink size={20} />
+                            </a>
+                        </div>
+                    )}
                 </div>
 
-                <h3 className="text-2xl font-bold mb-3 group-hover:text-blue-400 transition-colors">
+                <h3 className={`${compact ? 'text-xl' : 'text-2xl'} font-bold mb-3 group-hover:text-blue-400 transition-colors`}>
                     {project.title}
                 </h3>
                 <p className="text-gray-400 mb-6 leading-relaxed flex-grow">
@@ -140,9 +172,30 @@ const Projects = () => {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 perspective-1000">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 perspective-1000 mb-20">
                     {projects.map((project, index) => (
                         <ProjectCard key={index} project={project} index={index} />
+                    ))}
+                </div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-12"
+                >
+                    <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                        Arduino Projects
+                    </h3>
+                    <p className="text-gray-400 max-w-2xl mx-auto">
+                        Hardware and IoT projects powered by Arduino.
+                    </p>
+                </motion.div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 perspective-1000">
+                    {arduinoProjects.map((project, index) => (
+                        <ProjectCard key={`arduino-${index}`} project={project} index={index} compact={true} />
                     ))}
                 </div>
             </div>
