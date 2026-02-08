@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Github, ExternalLink, Folder } from 'lucide-react';
 
-const projects = [
+const largeScaleProjects = [
     {
         title: "Global Notes Workspace",
         description: "A persistent notes workspace featuring search functionality and a tagging system for efficient note organization.",
@@ -20,7 +20,10 @@ const projects = [
             github: "https://github.com/Kunal628-hue/personal-portfolio.git",
             demo: "https://personal-portfolio-kunal.netlify.app/"
         }
-    },
+    }
+];
+
+const smallScaleProjects = [
     {
         title: "Singhi Ghar Khata",
         description: "A comprehensive house expense management system designed to track daily household expenses and manage budget efficiently.",
@@ -41,7 +44,7 @@ const projects = [
     }
 ];
 
-const arduinoProjects = [
+const roboticsProjects = [
     {
         title: "Automatic Plant Watering System",
         description: "IoT-based system that monitors soil moisture and automatically waters plants when needed.",
@@ -157,6 +160,8 @@ const Projects = () => {
     return (
         <section id="projects" className="min-h-screen py-20 bg-transparent text-white relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                {/* Main Heading */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -172,32 +177,42 @@ const Projects = () => {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 perspective-1000 mb-20">
-                    {projects.map((project, index) => (
-                        <ProjectCard key={index} project={project} index={index} />
-                    ))}
-                </div>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-12"
-                >
-                    <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                        Arduino Projects
+                {/* Large Scale Projects */}
+                <div className="mb-20">
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-8 border-l-4 border-blue-500 pl-4">
+                        Large Scale Projects
                     </h3>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        Hardware and IoT projects powered by Arduino.
-                    </p>
-                </motion.div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 perspective-1000">
-                    {arduinoProjects.map((project, index) => (
-                        <ProjectCard key={`arduino-${index}`} project={project} index={index} compact={true} />
-                    ))}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 perspective-1000">
+                        {largeScaleProjects.map((project, index) => (
+                            <ProjectCard key={index} project={project} index={index} />
+                        ))}
+                    </div>
                 </div>
+
+                {/* Small Scale Projects */}
+                <div className="mb-20">
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-8 border-l-4 border-purple-500 pl-4">
+                        Small Scale Projects
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 perspective-1000">
+                        {smallScaleProjects.map((project, index) => (
+                            <ProjectCard key={`small-${index}`} project={project} index={index} compact={true} />
+                        ))}
+                    </div>
+                </div>
+
+                {/* Robotics Projects */}
+                <div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-8 border-l-4 border-orange-500 pl-4">
+                        Robotics & IoT
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 perspective-1000">
+                        {roboticsProjects.map((project, index) => (
+                            <ProjectCard key={`robotics-${index}`} project={project} index={index} compact={true} />
+                        ))}
+                    </div>
+                </div>
+
             </div>
         </section>
     );
