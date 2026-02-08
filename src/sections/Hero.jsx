@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sphere, MeshDistortMaterial, Float, Torus, Box } from '@react-three/drei';
+import React from 'react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Sphere, MeshDistortMaterial, Float } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import TextScramble from '../components/TextScramble';
 import MagneticWrapper from '../components/MagneticWrapper';
+import FloatingShapes from '../components/FloatingShapes';
 
 const AnimatedSphere = () => {
     return (
@@ -21,28 +22,6 @@ const AnimatedSphere = () => {
         </Float>
     );
 };
-
-const FloatingShapes = () => {
-    return (
-        <>
-            <Float speed={2} rotationIntensity={2} floatIntensity={1.5} position={[3, 1, -2]}>
-                <Torus args={[0.4, 0.1, 16, 32]} rotation={[0.5, 0.5, 0]}>
-                    <meshStandardMaterial color="#ec4899" roughness={0.1} metalness={0.5} />
-                </Torus>
-            </Float>
-            <Float speed={3} rotationIntensity={1.5} floatIntensity={2} position={[-3, -1, -1]}>
-                <Box args={[0.5, 0.5, 0.5]} rotation={[0, 0.5, 0]}>
-                    <meshStandardMaterial color="#8b5cf6" roughness={0.1} metalness={0.5} />
-                </Box>
-            </Float>
-            <Float speed={2.5} rotationIntensity={1} floatIntensity={1} position={[2, -2, 0]}>
-                <Sphere args={[0.2, 32, 32]}>
-                    <meshStandardMaterial color="#3b82f6" roughness={0.1} metalness={0.5} />
-                </Sphere>
-            </Float>
-        </>
-    );
-}
 
 const Hero = () => {
     return (

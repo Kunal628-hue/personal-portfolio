@@ -12,6 +12,7 @@ import Experience from './sections/Experience';
 import Education from './sections/Education';
 import Certifications from './sections/Certifications';
 import Tools from './sections/Tools';
+import ProblemSolving from './sections/ProblemSolving';
 import Contact from './sections/Contact';
 import Trading from './sections/Trading';
 import Activities from './sections/Activities';
@@ -29,6 +30,7 @@ function App() {
         <Hero />
         <About />
         <Skills />
+        <ProblemSolving />
         <Tools />
         <Projects />
         <Activities />
