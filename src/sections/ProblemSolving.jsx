@@ -5,48 +5,38 @@ const platforms = [
     {
         name: "LeetCode",
         image: "/platforms/leetcode.png",
-        url: "https://leetcode.com/",
+        url: "https://leetcode.com/u/kunal317-singhi/",
         color: "yellow"
     },
     {
         name: "CodeChef",
         image: "/platforms/codechef.svg",
-        url: "https://www.codechef.com/",
+        url: "https://www.codechef.com/users/zany_ref_83",
         color: "orange"
     },
     {
         name: "Codolio",
         image: "/platforms/codolio.svg",
-        url: "https://codolio.com/",
+        url: "https://codolio.com/profile/Kunal2414",
         color: "purple"
     },
     {
         name: "GeeksforGeeks",
         image: "/platforms/geeksforgeeks.svg",
-        url: "https://www.geeksforgeeks.org/",
+        url: "https://www.geeksforgeeks.org/profile/kunaltyc1?tab=activity",
         color: "green"
     }
 ];
 
 const InteractiveGrid = () => {
-    // grid-cols-12 means 12 columns. We'll generate enough items to fill a reasonable area.
-    // 12 columns * 6 rows = 72 items should cover the card nicely.
     const items = Array.from({ length: 72 }, (_, i) => i);
 
     return (
-        <div className="absolute inset-0 z-0 grid grid-cols-12 gap-1 pointer-events-auto">
+        <div className="absolute inset-0 z-0 grid grid-cols-12 gap-1 pointer-events-auto p-1">
             {items.map((item) => (
-                <motion.div
+                <div
                     key={item}
-                    className="w-full h-full bg-white/5 rounded-[2px]"
-                    initial={{ opacity: 0.1, scale: 1 }}
-                    whileHover={{
-                        scale: 1.1,
-                        opacity: 0.8,
-                        backgroundColor: "#22d3ee", // Cyan-400
-                        transition: { duration: 0.1 }
-                    }}
-                    transition={{ duration: 0.5 }}
+                    className="w-full h-full bg-white/5 rounded-[2px] transition-all duration-300 hover:scale-110 hover:bg-cyan-400/80 hover:opacity-100 opacity-20"
                 />
             ))}
         </div>
@@ -85,14 +75,26 @@ const ProblemSolving = () => {
                                     rel="noopener noreferrer"
                                     className="flex flex-col items-center gap-4 group/icon pointer-events-auto"
                                 >
-                                    <div className={`p-4 rounded-2xl bg-black/60 backdrop-blur-sm border border-white/10 shadow-lg transition-all duration-300 group-hover/icon:scale-110 group-hover/icon:bg-${platform.color}-500/20 group-hover/icon:border-${platform.color}-500/50`}>
-                                        <img
-                                            src={platform.image}
-                                            alt={platform.name}
-                                            className="w-16 h-16 object-contain filter grayscale group-hover/icon:grayscale-0 transition-all duration-300 drop-shadow-md"
-                                        />
+                                    <div className={`
+                                        p-6 rounded-xl 
+                                        bg-[#2a2a2a] 
+                                        relative overflow-hidden
+                                        border-t border-l border-white/10 
+                                        border-b-4 border-r-4 border-black/40 
+                                        shadow-xl transition-all duration-300 
+                                        group-hover/icon:scale-105 group-hover/icon:translate-y-[-2px]
+                                        before:absolute before:inset-0 before:opacity-20 before:bg-[url('https://grainy-gradients.vercel.app/noise.svg')]
+                                        after:absolute after:inset-0 after:bg-gradient-to-br after:from-white/5 after:to-black/20 after:pointer-events-none
+                                    `}>
+                                        <div className="relative z-10">
+                                            <img
+                                                src={platform.image}
+                                                alt={platform.name}
+                                                className="w-16 h-16 object-contain filter grayscale group-hover/icon:grayscale-0 transition-all duration-300 drop-shadow-md"
+                                            />
+                                        </div>
                                     </div>
-                                    <span className="text-sm font-medium text-gray-400 group-hover/icon:text-white transition-colors bg-black/50 px-2 py-1 rounded backdrop-blur-sm">
+                                    <span className="text-sm font-bold text-gray-500 group-hover/icon:text-gray-300 transition-colors mt-2 tracking-wider uppercase text-[10px] shadow-black drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
                                         {platform.name}
                                     </span>
                                 </a>

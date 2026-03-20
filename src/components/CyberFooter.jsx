@@ -50,7 +50,7 @@ const CyberFooter = () => {
                 </Canvas>
             </div>
 
-            <div className="relative z-10 h-full flex flex-col justify-end pb-8 items-center text-center pointer-events-auto">
+            <div className="relative z-10 h-full flex flex-col justify-end pb-20 items-center text-center pointer-events-auto">
                 <p className="text-gray-400 text-sm font-sans tracking-wider">
                     © {new Date().getFullYear()} Kunal Singhi. <span className="text-gray-600">All rights reserved.</span>
                 </p>

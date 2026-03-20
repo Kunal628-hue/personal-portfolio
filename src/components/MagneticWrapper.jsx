@@ -5,7 +5,11 @@ const MagneticWrapper = ({ children, className }) => {
     const ref = useRef(null);
 
     useEffect(() => {
+        if (!ref.current) return;
         const element = ref.current;
+
+        const xTo = gsap.quickTo(element, "x", { duration: 0.3, ease: "power2.out" });
+        const yTo = gsap.quickTo(element, "y", { duration: 0.3, ease: "power2.out" });
 
         const handleMouseMove = (e) => {
             const { clientX, clientY } = e;
@@ -14,12 +18,8 @@ const MagneticWrapper = ({ children, className }) => {
             const x = clientX - (left + width / 2);
             const y = clientY - (top + height / 2);
 
-            gsap.to(element, {
-                x: x * 0.3,
-                y: y * 0.3,
-                duration: 0.3,
-                ease: "power2.out"
-            });
+            xTo(x * 0.3);
+            yTo(y * 0.3);
         };
 
         const handleMouseLeave = () => {

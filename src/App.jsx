@@ -1,6 +1,7 @@
 import React from 'react';
 import CustomCursor from './components/CustomCursor';
 import ScrollProgress from './components/ScrollProgress';
+import BackgroundMusic from './components/BackgroundMusic';
 import Background3D from './components/Background3D';
 import Navbar from './components/Navbar';
 import CyberFooter from './components/CyberFooter';
@@ -24,6 +25,7 @@ function App() {
       <CustomCursor />
       <ScrollProgress />
       <StockTicker />
+      <BackgroundMusic />
       <Background3D />
       <Navbar />
       <main>

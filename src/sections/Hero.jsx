@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sphere, MeshDistortMaterial, Float, Stars } from '@react-three/drei';
+import { OrbitControls, Sphere, MeshDistortMaterial, Float } from '@react-three/drei';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import TextScramble from '../components/TextScramble';
 import MagneticWrapper from '../components/MagneticWrapper';
@@ -9,7 +9,7 @@ import FloatingShapes from '../components/FloatingShapes';
 const AnimatedSphere = () => {
     return (
         <Float speed={4} rotationIntensity={1} floatIntensity={2}>
-            <Sphere visible args={[1, 100, 200]} scale={2.5}>
+            <Sphere visible args={[1, 64, 64]} scale={2.5}>
                 <MeshDistortMaterial
                     color="#4F46E5"
                     attach="material"
@@ -92,12 +92,15 @@ const Hero = () => {
         <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-transparent text-white pt-20 pb-10">
             {/* 3D Canvas Layer */}
             <div className="absolute inset-0 z-0">
-                <Canvas camera={{ position: [0, 0, 5] }}>
+                <Canvas
+                    camera={{ position: [0, 0, 5] }}
+                    dpr={[1, 2]}
+                    gl={{ powerPreference: "high-performance", antialias: false }}
+                >
                     <ambientLight intensity={0.5} />
                     <directionalLight position={[2, 5, 2]} intensity={1.5} />
                     <pointLight position={[-2, -2, 2]} intensity={1} color="#f472b6" />
 
-                    <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
                     <AnimatedSphere />
                     <FloatingShapes />
 

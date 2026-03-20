@@ -64,7 +64,11 @@ const MarketGraph = () => {
 const Market3D = () => {
     return (
         <div className="h-[400px] w-full">
-            <Canvas camera={{ position: [0, 2, 12], fov: 50 }}>
+            <Canvas
+                camera={{ position: [0, 2, 12], fov: 50 }}
+                dpr={[1, 2]}
+                gl={{ powerPreference: "high-performance", antialias: false }}
+            >
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[5, 10, 5]} intensity={1.5} />
                 <pointLight position={[-5, 5, -5]} color="#22c55e" intensity={0.5} />

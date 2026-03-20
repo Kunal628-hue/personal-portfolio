@@ -26,10 +26,11 @@ const TickerItem = ({ item }) => (
 
 const StockTicker = () => {
     return (
-        <div className="fixed bottom-6 left-0 right-0 z-40 pointer-events-none opacity-80 mix-blend-screen">
-            <div className="bg-black/40 backdrop-blur-sm border-y border-white/5 py-2 overflow-hidden flex">
+        <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none opacity-80 mix-blend-screen">
+            <div className="bg-black/40 backdrop-blur-sm border-t border-white/5 py-2 overflow-hidden flex">
                 <motion.div
                     className="flex whitespace-nowrap"
+                    style={{ willChange: 'transform' }}
                     animate={{ x: ["0%", "-50%"] }}
                     transition={{
                         duration: 25,
