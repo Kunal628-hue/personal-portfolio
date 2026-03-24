@@ -1,160 +1,149 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { animate, stagger } from 'animejs';
 import { GraduationCap, BookOpen, School, Atom } from 'lucide-react';
-import { Canvas } from '@react-three/fiber';
-import { Float, Icosahedron, MeshDistortMaterial, Torus, OrbitControls, Stars } from '@react-three/drei';
 
-const EducationCard = ({ icon: Icon, title, period, school, description, tags, delay, color }) => (
-    <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay }}
-        className="bg-white/5 p-8 rounded-2xl border border-white/10 flex flex-col md:flex-row gap-6 items-start hover:border-white/20 transition-colors"
-    >
-        <div className={`p-4 bg-${color}-600/20 rounded-xl`}>
-            <Icon className={`text-${color}-400`} size={32} />
+const EducationCard = ({ icon: Icon, title, period, school, description, tags, color }) => (
+    <div className="edu-card opacity-0 glass-dark p-8 rounded-2xl border border-white/5 flex flex-col md:flex-row gap-8 items-start hover:border-blue-500/20 transition-all group relative z-10">
+        <div className={`p-5 bg-${color}-600/10 rounded-2xl group-hover:bg-${color}-600/20 transition-colors`}>
+            <Icon className={`text-${color}-400 group-hover:scale-110 transition-transform`} size={32} />
         </div>
-        <div>
-            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mb-2">
-                <h3 className="text-xl md:text-2xl font-bold text-white">{title}</h3>
-                <span className={`px-3 py-1 bg-${color}-500/20 text-${color}-300 text-xs font-bold rounded-full w-fit whitespace-nowrap`}>
+        <div className="flex-1">
+            <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+                <h3 className="text-2xl font-black text-white tracking-tight uppercase">{title}</h3>
+                <span className={`px-4 py-1.5 bg-blue-500/10 text-blue-300 text-xs font-black tracking-widest rounded-full w-fit uppercase border border-blue-500/20`}>
                     {period}
                 </span>
             </div>
-            <p className="text-lg text-gray-300 mb-4">{school}</p>
-            <p className="text-gray-400 leading-relaxed mb-4 text-sm md:text-base">
+            <p className="text-xl text-gray-300 font-bold mb-4">{school}</p>
+            <p className="text-gray-400 leading-relaxed mb-6 text-lg">
                 {description}
             </p>
             {tags && (
-                <div className="flex gap-2 flex-wrap">
+                <div className="flex gap-3 flex-wrap">
                     {tags.map((tag, i) => (
-                        <span key={i} className="px-3 py-1 bg-white/10 rounded-full text-xs text-gray-300">
+                        <span key={i} className="px-4 py-1.5 bg-white/5 rounded-xl text-xs font-bold text-gray-400 uppercase tracking-tighter border border-white/5">
                             {tag}
                         </span>
                     ))}
                 </div>
             )}
         </div>
-    </motion.div>
+    </div>
 );
 
-const FloatingGeo = () => {
+const AnimeGlowShapes = () => {
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+        animate('.glow-orbit', {
+            rotateZ: '1turn',
+            duration: 20000,
+            loop: true,
+            ease: 'linear'
+        });
+
+        animate('.glow-blob', {
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
+            translateX: () => Math.random() * 100 - 50,
+            translateY: () => Math.random() * 100 - 50,
+            duration: 5000,
+            loop: true,
+            direction: 'alternate',
+            ease: 'easeInOutSine'
+        });
+    }, []);
+
     return (
-        <Canvas camera={{ position: [0, 0, 6] }}>
-            <ambientLight intensity={1.5} />
-            <pointLight position={[10, 10, 10]} intensity={2} color="#3b82f6" />
-            <pointLight position={[-10, -10, -10]} intensity={1} color="#a855f7" />
-            <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
-
-            <Float speed={2} rotationIntensity={2} floatIntensity={1}>
-                {/* Outer Wireframe */}
-                <Icosahedron args={[2.2, 2]}>
-                    <meshStandardMaterial
-                        color="#3b82f6"
-                        wireframe
-                        transparent
-                        opacity={0.3}
-                        roughness={0}
-                        metalness={1}
-                    />
-                </Icosahedron>
-
-                {/* Inner Glowing Core */}
-                <Icosahedron args={[1.5, 4]}>
-                    <MeshDistortMaterial
-                        color="#60a5fa"
-                        distort={0.4}
-                        speed={3}
-                        roughness={0.2}
-                        metalness={0.8}
-                    />
-                </Icosahedron>
-            </Float>
-
-            <Float speed={1.5} rotationIntensity={1.5} floatIntensity={2}>
-                <Torus args={[3, 0.05, 16, 100]} rotation={[1.5, 0, 0]}>
-                    <meshStandardMaterial color="#a855f7" emissive="#a855f7" emissiveIntensity={2} />
-                </Torus>
-            </Float>
-
-            <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} />
-        </Canvas>
+        <div ref={containerRef} className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <div className="glow-orbit absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-blue-500/10 rounded-full">
+                <div className="glow-blob absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-blue-600/40 rounded-full blur-3xl"></div>
+            </div>
+            <div className="glow-orbit absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-purple-500/10 rounded-full" style={{ animationDirection: 'reverse' }}>
+                <div className="glow-blob absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-purple-600/40 rounded-full blur-3xl"></div>
+            </div>
+        </div>
     );
 };
 
 const Education = () => {
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                animate('.edu-card', {
+                    translateY: [40, 0],
+                    opacity: [0, 1],
+                    delay: stagger(200),
+                    ease: 'easeOutExpo',
+                    duration: 1200
+                });
+                observer.unobserve(entry.target);
+            }
+        }, { threshold: 0.1 });
+
+        observer.observe(sectionRef.current);
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <section id="education" className="py-20 bg-black text-white relative overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <section id="education" ref={sectionRef} className="py-32 bg-black text-white relative overflow-hidden">
+            <AnimeGlowShapes />
+            
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 items-center">
 
                     {/* Content Column */}
-                    <div className="lg:col-span-2 space-y-8">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <h2 className="text-3xl md:text-5xl font-bold mb-4">Education <span className="text-blue-500">&</span> Learning</h2>
-                            <p className="text-gray-400">My academic journey and milestones.</p>
-                        </motion.div>
+                    <div className="lg:col-span-2 space-y-12">
+                        <div className="mb-16">
+                            <h2 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter">
+                                ACADEMIC <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">FOUNDATION</span>
+                            </h2>
+                            <p className="text-gray-400 text-xl max-w-2xl">Bridging theoretical concepts with practical application.</p>
+                        </div>
 
-                        <div className="space-y-6">
-                            {/* B.Tech */}
+                        <div className="space-y-8">
                             <EducationCard
                                 icon={GraduationCap}
                                 title="B.Tech Computer Science"
                                 period="2025 - Present"
                                 school="Polaris School of Technology"
-                                description="Currently in first year, building a strong foundation in programming, data structures, and computer architecture."
+                                description="Building a robust foundation in high-performance computing, distributed systems, and modern software engineering."
                                 color="blue"
-                                delay={0.1}
                             />
 
-                            {/* Class XI-XII */}
                             <EducationCard
                                 icon={School}
                                 title="Senior Secondary (XI–XII)"
                                 period="Science Stream"
                                 school="St. Mary’s Junior College, Hyderabad"
-                                description="Focused on Physics, Chemistry, and Mathematics (PCM). Balanced board curriculum with competitive exam preparation."
-                                tags={["PCM", "Competitive Prep"]}
+                                description="Specialized in core physical sciences and mathematics with an emphasis on analytical logic."
+                                tags={["PCM", "Advanced Calculus"]}
                                 color="purple"
-                                delay={0.2}
                             />
 
-                            {/* JEE Coaching */}
                             <EducationCard
                                 icon={Atom}
-                                title="JEE Preparation"
-                                period="Coaching"
+                                title="JEE Specialized Prep"
+                                period="Academic Discipline"
                                 school="Physics Wallah (PW)"
-                                description="Intensive preparation in Physics, Chemistry, and Math. Developed strong problem-solving discipline and conceptual clarity."
-                                tags={["Problem Solving", "Analytical Skills"]}
-                                color="yellow"
-                                delay={0.3}
-                            />
-
-                            {/* Class X */}
-                            <EducationCard
-                                icon={BookOpen}
-                                title="Secondary Education (Class X)"
-                                period="Schooling"
-                                school="Gitanjali Devshala, Hyderabad"
-                                description="Built a strong academic foundation with active participation in extracurriculars."
-                                color="pink"
-                                delay={0.4}
+                                description="Rigorous problem-solving training focusing on competitive engineering standards."
+                                tags={["Problem Solving", "Conceptual Depth"]}
+                                color="orange"
                             />
                         </div>
                     </div>
 
-                    {/* 3D Visual Column (Desktop) */}
-                    <div className="hidden lg:block lg:col-span-1 relative h-full min-h-[500px]">
-                        <div className="sticky top-20 h-[500px] w-full">
-                            <FloatingGeo />
-                            <div className="absolute bottom-10 left-0 right-0 text-center">
-                                <p className="text-blue-400 font-mono text-sm tracking-widest">KNOWLEDGE STRUCTURE</p>
-                            </div>
+                    {/* 3D Visual Replacement */}
+                    <div className="hidden lg:flex lg:col-span-1 flex-col items-center justify-center relative h-[500px]">
+                        <div className="relative w-64 h-64 border-2 border-blue-500/20 rounded-full flex items-center justify-center animate-spin-slow">
+                            <Atom className="text-blue-500 w-32 h-32 opacity-20" />
+                            <div className="absolute inset-0 border-t-2 border-blue-400 rounded-full"></div>
+                        </div>
+                        <div className="mt-12 text-center">
+                            <p className="text-blue-400 font-black tracking-[0.2em] text-sm uppercase">Conceptual Architecture</p>
+                            <div className="w-12 h-1 bg-blue-500 mx-auto mt-4 rounded-full"></div>
                         </div>
                     </div>
 

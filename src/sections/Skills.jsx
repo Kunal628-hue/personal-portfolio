@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { animate, stagger } from 'animejs';
 import TiltCard from '../components/TiltCard';
 
 const skills = [
@@ -10,45 +10,71 @@ const skills = [
 ];
 
 const Skills = () => {
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                animate('.skill-card', {
+                    translateY: [50, 0],
+                    opacity: [0, 1],
+                    delay: stagger(150),
+                    ease: 'easeOutExpo',
+                    duration: 1200
+                });
+
+                animate('.skill-tag', {
+                    scale: [0.5, 1],
+                    opacity: [0, 1],
+                    delay: stagger(20, { start: 500 }),
+                    ease: 'easeOutExpo',
+                    duration: 800
+                });
+
+                observer.unobserve(entry.target);
+            }
+        }, { threshold: 0.2 });
+
+        observer.observe(sectionRef.current);
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <section id="skills" className="min-h-screen py-20 bg-black text-white relative flex flex-col justify-center">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-black to-black pointer-events-none" />
+        <section id="skills" ref={sectionRef} className="min-h-screen py-32 bg-transparent text-white relative flex flex-col justify-center overflow-hidden">
+            {/* Ambient Background Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                        My <span className="text-blue-500">Skills</span>
+                <div className="text-center mb-20">
+                    <h2 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter">
+                        TECHNICAL <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">ARSENAL</span>
                     </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        A comprehensive technical skillset spanning across software and hardware.
+                    <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+                        Mastering the intersection of sophisticated software and tangible hardware.
                     </p>
-                </motion.div>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 perspective-1000">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 perspective-1000">
                     {skills.map((skillSet, index) => (
-                        <TiltCard key={index} className="h-full" color={skillSet.color}>
-                            <div className="p-6 h-full flex flex-col">
-                                <h3 className={`text-xl font-bold mb-4 border-b border-white/10 pb-2 text-${skillSet.color}-400`}>
-                                    {skillSet.category}
-                                </h3>
-                                <div className="flex flex-wrap gap-2">
-                                    {skillSet.items.map((item) => (
-                                        <span
-                                            key={item}
-                                            className={`px-3 py-1 text-sm font-medium rounded-full border shadow-[0_0_10px_rgba(0,0,0,0.2)] bg-${skillSet.color}-500/10 text-${skillSet.color}-200 border-${skillSet.color}-500/20`}
-                                        >
-                                            {item}
-                                        </span>
-                                    ))}
+                        <div key={index} className="skill-card h-full opacity-0">
+                            <TiltCard className="h-full" color={skillSet.color}>
+                                <div className="p-8 h-full flex flex-col glass-dark border border-white/5">
+                                    <h3 className={`text-2xl font-black mb-6 tracking-tight text-${skillSet.color}-400 uppercase`}>
+                                        {skillSet.category}
+                                    </h3>
+                                    <div className="flex flex-wrap gap-3">
+                                        {skillSet.items.map((item) => (
+                                            <span
+                                                key={item}
+                                                className={`skill-tag opacity-0 px-4 py-1.5 text-xs font-bold rounded-lg border border-white/5 bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 transition-all cursor-default`}
+                                            >
+                                                {item}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        </TiltCard>
+                            </TiltCard>
+                        </div>
                     ))}
                 </div>
             </div>

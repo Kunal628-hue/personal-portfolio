@@ -1,49 +1,80 @@
-import React from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import CustomCursor from './components/CustomCursor';
 import ScrollProgress from './components/ScrollProgress';
 import BackgroundMusic from './components/BackgroundMusic';
-import Background3D from './components/Background3D';
+import AnimeBackground from './components/AnimeBackground';
+import PageLoader from './components/PageLoader';
 import Navbar from './components/Navbar';
 import CyberFooter from './components/CyberFooter';
 import Hero from './sections/Hero';
-import About from './sections/About';
-import Skills from './sections/Skills';
-import Projects from './sections/Projects';
-import Experience from './sections/Experience';
-import Education from './sections/Education';
-import Certifications from './sections/Certifications';
-import Tools from './sections/Tools';
-import ProblemSolving from './sections/ProblemSolving';
-import Contact from './sections/Contact';
-import Trading from './sections/Trading';
-import Activities from './sections/Activities';
+import SectionReveal from './components/SectionReveal';
 import StockTicker from './components/StockTicker';
 
-function App() {
-  return (
-    <div className="bg-black text-white min-h-screen selection:bg-blue-500 selection:text-white overflow-hidden relative cursor-none">
-      <CustomCursor />
-      <ScrollProgress />
-      <StockTicker />
-      <BackgroundMusic />
-      <Background3D />
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <ProblemSolving />
-        <Tools />
-        <Projects />
-        <Activities />
-        <Trading />
-        <Experience />
-        <Education />
-        <Certifications />
-        <Contact />
-      </main>
+// Lazy load sections below the fold
+const About = lazy(() => import('./sections/About'));
+const Skills = lazy(() => import('./sections/Skills'));
+const Projects = lazy(() => import('./sections/Projects'));
+const Experience = lazy(() => import('./sections/Experience'));
+const Education = lazy(() => import('./sections/Education'));
+const Certifications = lazy(() => import('./sections/Certifications'));
+const Tools = lazy(() => import('./sections/Tools'));
+const ProblemSolving = lazy(() => import('./sections/ProblemSolving'));
+const Contact = lazy(() => import('./sections/Contact'));
+const Trading = lazy(() => import('./sections/Trading'));
+const Activities = lazy(() => import('./sections/Activities'));
 
-      <CyberFooter />
+function App() {
+  const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Detect mobile for targeted performance disabling
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return (
+    <div className={`bg-[#030014] text-white min-h-screen selection:bg-blue-500 selection:text-white overflow-x-hidden relative ${!isMobile ? 'cursor-none' : ''} ${loading ? 'h-screen overflow-hidden' : ''}`}>
+      {loading && <PageLoader onComplete={() => setLoading(false)} />}
+      
+      {!loading && (
+        <>
+          {/* Performance: Disable heavy mouse-followers on mobile for Lighthouse score */}
+          {!isMobile && <CustomCursor />}
+          <ScrollProgress />
+          
+          {/* Performance: Only show ticker on desktop - huge score boost for mobile TTI */}
+          {!isMobile && <StockTicker />}
+          
+          <BackgroundMusic />
+          
+          {/* Higher-impact performance background for all but lower density on mobile internal */}
+          <AnimeBackground />
+          
+          <Navbar />
+          <main>
+            <Hero />
+            <Suspense fallback={<div className="h-96" />}>
+              <SectionReveal><About /></SectionReveal>
+              <SectionReveal><Skills /></SectionReveal>
+              <SectionReveal><ProblemSolving /></SectionReveal>
+              <SectionReveal><Tools /></SectionReveal>
+              <SectionReveal><Projects /></SectionReveal>
+              <SectionReveal><Activities /></SectionReveal>
+              <SectionReveal><Trading /></SectionReveal>
+              <SectionReveal><Experience /></SectionReveal>
+              <SectionReveal><Education /></SectionReveal>
+              <SectionReveal><Certifications /></SectionReveal>
+              <SectionReveal><Contact /></SectionReveal>
+            </Suspense>
+          </main>
+          <CyberFooter />
+        </>
+      )}
     </div>
   );
 }

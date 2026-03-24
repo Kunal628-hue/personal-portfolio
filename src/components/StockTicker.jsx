@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 
 const tickers = [
@@ -26,22 +25,24 @@ const TickerItem = ({ item }) => (
 
 const StockTicker = () => {
     return (
-        <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none opacity-80 mix-blend-screen">
-            <div className="bg-black/40 backdrop-blur-sm border-t border-white/5 py-2 overflow-hidden flex">
-                <motion.div
-                    className="flex whitespace-nowrap"
-                    style={{ willChange: 'transform' }}
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{
-                        duration: 25,
-                        ease: "linear",
-                        repeat: Infinity,
-                    }}
-                >
-                    {[...tickers, ...tickers, ...tickers].map((item, index) => (
-                        <TickerItem key={index} item={item} />
-                    ))}
-                </motion.div>
+        <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none opacity-80 mix-blend-screen overflow-hidden bg-black/40 backdrop-blur-sm border-t border-white/5 py-2">
+            <style dangerouslySetInnerHTML={{ __html: `
+                @keyframes ticker {
+                    0% { transform: translate3d(0, 0, 0); }
+                    100% { transform: translate3d(-50%, 0, 0); }
+                }
+                .ticker-content {
+                    display: flex;
+                    white-space: nowrap;
+                    width: max-content;
+                    animation: ticker 40s linear infinite;
+                    will-change: transform;
+                }
+            `}} />
+            <div className="ticker-content">
+                {[...tickers, ...tickers, ...tickers, ...tickers].map((item, index) => (
+                    <TickerItem key={index} item={item} />
+                ))}
             </div>
         </div>
     );

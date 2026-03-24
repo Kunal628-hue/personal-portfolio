@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
 import { Github, ExternalLink, Folder } from 'lucide-react';
+import { animate, stagger } from 'animejs';
 
 const largeScaleProjects = [
     {
@@ -63,73 +63,42 @@ const roboticsProjects = [
 ];
 
 const ProjectCard = ({ project, index, compact = false }) => {
-    const ref = useRef(null);
-
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const mouseXSpring = useSpring(x);
-    const mouseYSpring = useSpring(y);
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["17.5deg", "-17.5deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-17.5deg", "17.5deg"]);
+    const cardRef = useRef(null);
 
     const handleMouseMove = (e) => {
-        const rect = ref.current.getBoundingClientRect();
+        if (window.innerWidth < 1024) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const x = (e.clientX - (rect.left + rect.width / 2)) * 0.05;
+        const y = (e.clientY - (rect.top + rect.height / 2)) * 0.05;
 
-        const width = rect.width;
-        const height = rect.height;
-
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-
-        x.set(xPct);
-        y.set(yPct);
+        cardRef.current.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
     };
 
     const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
+        cardRef.current.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg)`;
     };
 
     return (
-        <motion.div
-            ref={ref}
+        <div 
+            ref={cardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            style={{
-                rotateY,
-                rotateX,
-                transformStyle: "preserve-3d",
-            }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            viewport={{ once: true }}
-            className="group relative h-full w-full bg-black/50 border border-white/10 rounded-2xl overflow-hidden hover:border-blue-500/50 transition-all duration-300 transform-gpu perspective-1000"
+            className="group relative h-full w-full bg-black/50 border border-white/10 rounded-2xl overflow-hidden hover:border-blue-500/50 transition-all duration-300 transform-gpu will-change-transform"
+            style={{ transition: 'transform 0.1s ease-out, border-color 0.3s ease' }}
         >
-            <div
-                style={{ transform: "translateZ(75px)", transformStyle: "preserve-3d" }}
-                className="absolute inset-4 grid place-content-center rounded-xl bg-gray-900/40 shadow-lg opacity-0 group-hover:opacity-10 pointer-events-none"
-            >
-            </div>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-            <div className={`${compact ? 'p-6' : 'p-8'} relative z-10 flex flex-col h-full`} style={{ transform: "translateZ(50px)" }}>
+            <div className={`${compact ? 'p-6' : 'p-8'} relative z-10 flex flex-col h-full`}>
                 <div className="flex justify-between items-start mb-6">
-                    <div className="p-3 bg-blue-500/20 rounded-lg">
+                    <div className="p-3 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
                         <Folder className="text-blue-400" size={compact ? 20 : 24} />
                     </div>
                     {project.links && (
                         <div className="flex gap-4">
-                            <a href={project.links.github} className="text-gray-400 hover:text-white transition-colors">
+                            <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                                 <Github size={20} />
                             </a>
-                            <a href={project.links.demo} className="text-gray-400 hover:text-white transition-colors">
+                            <a href={project.links.demo} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                                 <ExternalLink size={20} />
                             </a>
                         </div>
@@ -139,80 +108,82 @@ const ProjectCard = ({ project, index, compact = false }) => {
                 <h3 className={`${compact ? 'text-xl' : 'text-2xl'} font-bold mb-3 group-hover:text-blue-400 transition-colors`}>
                     {project.title}
                 </h3>
-                <p className="text-gray-400 mb-6 leading-relaxed flex-grow">
+                <p className="text-gray-400 mb-6 leading-relaxed flex-grow text-sm md:text-base">
                     {project.description}
                 </p>
 
                 <div className="flex flex-wrap gap-2 mt-auto">
                     {project.tags.map(tag => (
-                        <span key={tag} className="text-xs font-medium px-3 py-1 rounded-full bg-white/5 text-blue-300">
+                        <span key={tag} className="text-xs font-bold px-3 py-1 rounded-full bg-white/5 text-blue-300 border border-white/5">
                             {tag}
                         </span>
                     ))}
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 };
 
-
 const Projects = () => {
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                animate('.project-reveal', {
+                    translateY: [40, 0],
+                    opacity: [0, 1],
+                    delay: stagger(150),
+                    ease: 'easeOutExpo',
+                    duration: 1000
+                });
+                observer.unobserve(entry.target);
+            }
+        }, { threshold: 0.05 });
+
+        if (sectionRef.current) observer.observe(sectionRef.current);
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <section id="projects" className="min-h-screen py-20 bg-transparent text-white relative z-10">
+        <section id="projects" ref={sectionRef} className="py-32 bg-transparent text-white relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-                {/* Main Heading */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 mb-4">
-                        Featured Projects
+                <div className="text-center mb-24 project-reveal opacity-0">
+                    <h2 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter uppercase">
+                        Selected <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Works</span>
                     </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        Hover over the cards to see the 3D tilt effect in action.
+                    <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+                        Engineering digital solutions at the intersection of design and functionality.
                     </p>
-                </motion.div>
-
-                {/* Large Scale Projects */}
-                <div className="mb-20">
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-8 border-l-4 border-blue-500 pl-4">
-                        Large Scale Projects
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 perspective-1000">
-                        {largeScaleProjects.map((project, index) => (
-                            <ProjectCard key={index} project={project} index={index} />
-                        ))}
-                    </div>
                 </div>
 
-                {/* Small Scale Projects */}
-                <div className="mb-20">
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-8 border-l-4 border-purple-500 pl-4">
-                        Small Scale Projects
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 perspective-1000">
-                        {smallScaleProjects.map((project, index) => (
-                            <ProjectCard key={`small-${index}`} project={project} index={index} compact={true} />
-                        ))}
+                <div className="space-y-32">
+                    <div className="project-reveal opacity-0">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                            {largeScaleProjects.map((project, index) => (
+                                <ProjectCard key={index} project={project} index={index} />
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="project-reveal opacity-0">
+                        <h3 className="text-sm font-black text-blue-400 mb-10 tracking-[0.4em] uppercase opacity-40">System Architecture</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                            {smallScaleProjects.map((project, index) => (
+                                <ProjectCard key={index} project={project} index={index} compact={true} />
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="project-reveal opacity-0">
+                        <h3 className="text-sm font-black text-orange-400 mb-10 tracking-[0.4em] uppercase opacity-40">Robotics Lab</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {roboticsProjects.map((project, index) => (
+                                <ProjectCard key={index} project={project} index={index} compact={true} />
+                            ))}
+                        </div>
                     </div>
                 </div>
-
-                {/* Robotics Projects */}
-                <div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-8 border-l-4 border-orange-500 pl-4">
-                        Robotics & IoT
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 perspective-1000">
-                        {roboticsProjects.map((project, index) => (
-                            <ProjectCard key={`robotics-${index}`} project={project} index={index} compact={true} />
-                        ))}
-                    </div>
-                </div>
-
             </div>
         </section>
     );

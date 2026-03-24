@@ -1,63 +1,56 @@
-import React, { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Grid, Stars } from '@react-three/drei';
-
-const MovingPlane = () => {
-    const gridRef = useRef();
-
-    useFrame((state, delta) => {
-        if (gridRef.current) {
-            gridRef.current.position.z = (state.clock.elapsedTime * 2) % 10;
-        }
-    })
-
-    return (
-        <group position={[0, -2, -20]}>
-            <Grid
-                ref={gridRef}
-                args={[100, 100]}
-                cellSize={1}
-                cellThickness={1}
-                sectionSize={5}
-                sectionThickness={1.5}
-                fadeDistance={50}
-                sectionColor="#00ff88"
-                cellColor="#005522"
-                infiniteGrid={true}
-            />
-        </group>
-    )
-}
-
-const VaporwaveSun = () => {
-    return (
-        <mesh position={[0, 5, -30]}>
-            <circleGeometry args={[8, 64]} />
-            <meshBasicMaterial color="#d946ef" /> {/* Fuchsia-500 */}
-        </mesh>
-    )
-}
+import React, { useEffect, useRef } from 'react';
+import { animate } from 'animejs';
 
 const CyberFooter = () => {
+    const gridRef = useRef(null);
+
+    useEffect(() => {
+        // Aesthetic Grid Animation using Anime.js (very low CPU)
+        animate(gridRef.current, {
+            backgroundPosition: '0 100px',
+            duration: 8000,
+            direction: 'normal',
+            loop: true,
+            easing: 'linear'
+        });
+    }, []);
+
     return (
-        <footer className="relative h-[300px] w-full bg-black overflow-hidden border-t border-gray-900">
-            <div className="absolute inset-0 z-0">
-                <Canvas camera={{ position: [0, 2, 5], fov: 60 }}>
-                    <fog attach="fog" args={['#000000', 5, 50]} />
-                    <MovingPlane />
-                    <VaporwaveSun />
-                    <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1} />
-                </Canvas>
+        <footer className="relative h-[300px] w-full bg-[#030014] overflow-hidden border-t border-white/5 selection:bg-purple-500">
+            {/* Visual Replacement for WebGL: High-speed CSS Grid + Glow */}
+            <div className="absolute inset-0 z-0 perspective-500 overflow-hidden">
+                <div 
+                    ref={gridRef}
+                    className="absolute inset-0 w-full h-[200%] -top-1/2 opacity-30"
+                    style={{
+                        backgroundImage: `linear-gradient(to right, rgba(0, 255, 136, 0.1) 1px, transparent 1px), 
+                                          linear-gradient(to bottom, rgba(0, 255, 136, 0.1) 1px, transparent 1px)`,
+                        backgroundSize: '40px 40px',
+                        transform: 'rotateX(60deg) translateZ(0)',
+                        transformOrigin: 'center center'
+                    }}
+                ></div>
+                
+                {/* Vaporwave Sun Alternative */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-purple-600/20 rounded-full blur-3xl"></div>
             </div>
 
-            <div className="relative z-10 h-full flex flex-col justify-end pb-20 items-center text-center pointer-events-auto">
-                <p className="text-gray-400 text-sm font-sans tracking-wider">
-                    © {new Date().getFullYear()} Kunal Singhi. <span className="text-gray-600">All rights reserved.</span>
+            <div className="relative z-10 h-full flex flex-col justify-end pb-12 items-center text-center px-4">
+                <h2 className="text-2xl font-black bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-4 tracking-tighter">
+                   KUNAL SINGHI
+                </h2>
+                <p className="text-gray-500 text-sm font-medium tracking-widest uppercase">
+                    © {new Date().getFullYear()} • Crafting digital excellence
                 </p>
+                <div className="mt-4 flex gap-4">
+                    <div className="w-1 h-1 rounded-full bg-blue-500/40"></div>
+                    <div className="w-1 h-1 rounded-full bg-purple-500/40"></div>
+                    <div className="w-1 h-1 rounded-full bg-pink-500/40"></div>
+                </div>
             </div>
 
-            {/* Vignette/Fade */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black pointer-events-none" />
+            {/* Fade Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-[#030014] pointer-events-none" />
         </footer>
     );
 };

@@ -1,83 +1,83 @@
-import React, { useRef, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Box, Float } from '@react-three/drei';
-import * as THREE from 'three';
+import React, { useEffect, useRef } from 'react';
+import { animate, stagger } from 'animejs';
 
-const Candle = ({ position, height, color }) => {
-    return (
-        <group position={position}>
-            {/* Main Body */}
-            <Box args={[0.8, height, 0.8]} position={[0, height / 2, 0]}>
-                <meshStandardMaterial color={color} metalness={0.6} roughness={0.2} />
-            </Box>
-            {/* Wick */}
-            <Box args={[0.1, height + 2, 0.1]} position={[0, (height + 2) / 2 - 1, 0]}>
-                <meshStandardMaterial color="#4b5563" />
-            </Box>
-        </group>
-    );
-};
+const Market3DReplacement = () => {
+    const containerRef = useRef(null);
 
-const MarketGraph = () => {
-    const candles = useMemo(() => {
-        const data = [];
-        let prevClose = 0;
+    useEffect(() => {
+        if (!containerRef.current) return;
 
-        for (let i = 0; i < 15; i++) {
-            const isGreen = Math.random() > 0.45;
-            const height = Math.random() * 3 + 1; // 1 to 4
-            const color = isGreen ? '#22c55e' : '#ef4444'; // green-500 : red-500
+        // Animate candlesticks with Anime.js (High-performance replacement for WebGL)
+        animate('.candle-body', {
+            scaleY: [0.1, 1],
+            opacity: [0, 0.8],
+            duration: 1500,
+            delay: stagger(100),
+            ease: 'easeOutElastic(1, .8)'
+        });
 
-            // Simple logic to place them next to each other
-            // const y = prevClose; 
-            // randomness for "open" relatively to prev close
-            const yOffset = (Math.random() - 0.5) * 2;
+        animate('.candle-wick', {
+            scaleY: [0, 1.2, 1],
+            opacity: [0, 0.4],
+            duration: 2000,
+            delay: stagger(100),
+            ease: 'easeOutExpo'
+        });
 
-            data.push({
-                position: [(i - 7) * 1.5, yOffset, 0],
-                height: height,
-                color: color
-            });
-            prevClose += (isGreen ? 1 : -1) * (Math.random());
-        }
-        return data;
+        // Infinite Pulse for the market "vibe"
+        animate('.market-glow', {
+            opacity: [0.3, 0.6],
+            scale: [0.95, 1.05],
+            duration: 4000,
+            loop: true,
+            direction: 'alternate',
+            ease: 'easeInOutSine'
+        });
     }, []);
 
-    const groupRef = useRef();
-
-    useFrame((state) => {
-        const t = state.clock.getElapsedTime();
-        groupRef.current.rotation.y = Math.sin(t * 0.2) * 0.3; // Gentle swaying
+    const candles = Array.from({ length: 12 }).map((_, i) => {
+        const isUp = Math.random() > 0.4;
+        const height = 40 + Math.random() * 80;
+        const yPos = 30 + Math.random() * 40;
+        
+        return (
+            <div 
+                key={i} 
+                className="relative flex flex-col items-center justify-center h-full"
+                style={{ width: '20px' }}
+            >
+                {/* Wick */}
+                <div 
+                    className="candle-wick w-[1px] h-32 bg-gray-500/40 absolute opacity-0"
+                    style={{ transformOrigin: 'center' }}
+                ></div>
+                {/* Body */}
+                <div 
+                    className={`candle-body w-3 rounded-sm opacity-0 shadow-lg ${isUp ? 'bg-green-500/80 shadow-green-500/20' : 'bg-red-500/80 shadow-red-500/20'}`}
+                    style={{ 
+                        height: `${height}px`, 
+                        transform: `translateY(${isUp ? -yPos : yPos}px)`,
+                        transformOrigin: 'center'
+                    }}
+                ></div>
+            </div>
+        );
     });
 
     return (
-        <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-            <group ref={groupRef} rotation={[0.2, -0.5, 0]}>
-                {candles.map((candle, index) => (
-                    <Candle key={index} {...candle} />
-                ))}
-            </group>
-        </Float>
+        <div ref={containerRef} className="w-full h-full flex items-center justify-center gap-4 relative overflow-visible perspective-1000">
+            <div className="market-glow absolute inset-0 bg-green-500/5 blur-[100px] rounded-full pointer-events-none"></div>
+            <div className="flex items-center justify-center gap-2 md:gap-4 h-64 transform-gpu" style={{ transform: 'rotateX(10deg) rotateY(-10deg)' }}>
+                {candles}
+            </div>
+        </div>
     );
 };
 
 const Market3D = () => {
     return (
-        <div className="h-[400px] w-full">
-            <Canvas
-                camera={{ position: [0, 2, 12], fov: 50 }}
-                dpr={[1, 2]}
-                gl={{ powerPreference: "high-performance", antialias: false }}
-            >
-                <ambientLight intensity={0.5} />
-                <directionalLight position={[5, 10, 5]} intensity={1.5} />
-                <pointLight position={[-5, 5, -5]} color="#22c55e" intensity={0.5} />
-                <pointLight position={[5, -5, 5]} color="#ef4444" intensity={0.5} />
-
-                <MarketGraph />
-
-                <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} minPolarAngle={Math.PI / 4} maxPolarAngle={Math.PI / 1.5} />
-            </Canvas>
+        <div className="h-[400px] w-full flex items-center justify-center">
+            <Market3DReplacement />
         </div>
     );
 };

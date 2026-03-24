@@ -1,37 +1,41 @@
 import React, { useRef, useEffect } from 'react';
-import gsap from 'gsap';
+import { animate } from 'animejs';
 
 const MagneticWrapper = ({ children, className }) => {
     const ref = useRef(null);
 
     useEffect(() => {
+        if (window.innerWidth < 1024) return;
         if (!ref.current) return;
+        
         const element = ref.current;
-
-        const xTo = gsap.quickTo(element, "x", { duration: 0.3, ease: "power2.out" });
-        const yTo = gsap.quickTo(element, "y", { duration: 0.3, ease: "power2.out" });
 
         const handleMouseMove = (e) => {
             const { clientX, clientY } = e;
             const { left, top, width, height } = element.getBoundingClientRect();
 
-            const x = clientX - (left + width / 2);
-            const y = clientY - (top + height / 2);
+            const x = (clientX - (left + width / 2)) * 0.35;
+            const y = (clientY - (top + height / 2)) * 0.35;
 
-            xTo(x * 0.3);
-            yTo(y * 0.3);
-        };
-
-        const handleMouseLeave = () => {
-            gsap.to(element, {
-                x: 0,
-                y: 0,
-                duration: 0.5,
-                ease: "elastic.out(1, 0.3)"
+            // Use Anime.js for consistency and better performance than GSAP in this context
+            animate(element, {
+                translateX: x,
+                translateY: y,
+                duration: 400,
+                ease: 'easeOutQuad'
             });
         };
 
-        element.addEventListener('mousemove', handleMouseMove);
+        const handleMouseLeave = () => {
+            animate(element, {
+                translateX: 0,
+                translateY: 0,
+                duration: 800,
+                ease: 'easeOutElastic(1, .5)'
+            });
+        };
+
+        element.addEventListener('mousemove', handleMouseMove, { passive: true });
         element.addEventListener('mouseleave', handleMouseLeave);
 
         return () => {
@@ -40,7 +44,10 @@ const MagneticWrapper = ({ children, className }) => {
         };
     }, []);
 
-    return React.cloneElement(children, { ref, className: `${children.props.className} ${className}` });
+    return React.cloneElement(children, { 
+        ref, 
+        className: `${children.props.className || ''} ${className || ''} interactive magnetic select-none transition-shadow` 
+    });
 };
 
 export default MagneticWrapper;
