@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Linkedin, Github } from 'lucide-react';
-import Earth from '../components/Earth';
+import Bitcoin3D from '../components/Bitcoin3D';
 
 const Contact = () => {
     return (
@@ -76,14 +76,14 @@ const Contact = () => {
                         </motion.a>
                     </div>
 
-                    {/* 3D Earth */}
+                    {/* 3D Bitcoin */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8 }}
                         className="w-full md:w-1/2 flex justify-center"
                     >
-                        <Earth />
+                        <Bitcoin3D />
                     </motion.div>
 
                 </div>

@@ -28,21 +28,7 @@ const platforms = [
     }
 ];
 
-const InteractiveGrid = () => {
-    // Highly optimized minimal grid
-    const items = Array.from({ length: 32 }, (_, i) => i);
 
-    return (
-        <div className="absolute inset-0 z-0 grid grid-cols-8 gap-2 p-2 opacity-10 pointer-events-none">
-            {items.map((item) => (
-                <div
-                    key={item}
-                    className="w-full h-full bg-white/10 rounded-lg hover:bg-cyan-400/50 transition-colors duration-500"
-                />
-            ))}
-        </div>
-    );
-};
 
 const ProblemSolving = () => {
     const sectionRef = useRef(null);
@@ -65,6 +51,13 @@ const ProblemSolving = () => {
         return () => observer.disconnect();
     }, []);
 
+    const colorMap = {
+        yellow: 'group-hover/icon:shadow-yellow-500/40 group-hover/icon:border-yellow-500/50 group-hover/icon:bg-yellow-500/10',
+        orange: 'group-hover/icon:shadow-orange-500/40 group-hover/icon:border-orange-500/50 group-hover/icon:bg-orange-500/10',
+        purple: 'group-hover/icon:shadow-purple-500/40 group-hover/icon:border-purple-500/50 group-hover/icon:bg-purple-500/10',
+        green: 'group-hover/icon:shadow-green-500/40 group-hover/icon:border-green-500/50 group-hover/icon:bg-green-500/10'
+    };
+
     return (
         <section id="problem-solving" ref={sectionRef} className="py-20 bg-[#030014] text-white relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -78,7 +71,19 @@ const ProblemSolving = () => {
                 <div className="max-w-4xl mx-auto flex justify-center problem-reveal opacity-0 h-full">
                     <div className="relative w-full max-w-3xl aspect-[16/6] md:aspect-[3/1] bg-gray-900/40 rounded-3xl border border-white/5 overflow-hidden group">
                         
-                        <InteractiveGrid />
+                        <div className="absolute inset-0 z-0 grid grid-cols-4 md:grid-cols-8 gap-2 p-2 opacity-20">
+                            {Array.from({ length: 32 }).map((_, i) => (
+                                <div
+                                    key={i}
+                                    className={`w-full h-full bg-white/5 rounded-lg transition-all duration-300 cursor-crosshair hover:bg-white/10 ${
+                                        i % 4 === 0 ? 'hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]' : 
+                                        i % 4 === 1 ? 'hover:shadow-[0_0_15px_rgba(168,85,247,0.5)]' : 
+                                        i % 4 === 2 ? 'hover:shadow-[0_0_15px_rgba(236,72,153,0.5)]' : 
+                                        'hover:shadow-[0_0_15px_rgba(34,197,94,0.5)]'
+                                    }`}
+                                />
+                            ))}
+                        </div>
 
                         <div className="relative z-10 h-full flex flex-wrap items-center justify-around p-8 md:p-12 gap-8">
                             {platforms.map((platform, index) => (
@@ -89,7 +94,7 @@ const ProblemSolving = () => {
                                     rel="noopener noreferrer"
                                     className="flex flex-col items-center gap-4 group/icon hover:scale-110 transition-transform duration-500"
                                 >
-                                    <div className="p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/5 transition-colors relative group-hover/icon:shadow-[0_0_20px_rgba(255,255,255,0.05)]">
+                                    <div className={`p-4 rounded-2xl bg-white/5 border border-white/5 transition-all duration-500 relative ${colorMap[platform.color]}`}>
                                         <img
                                             src={platform.image}
                                             alt={platform.name}
