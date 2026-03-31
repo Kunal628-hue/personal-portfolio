@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Github, ExternalLink, Folder } from 'lucide-react';
 import { animate, stagger } from 'animejs';
+import Typewriter from '../components/Typewriter';
 
 const largeScaleProjects = [
     {
@@ -152,8 +153,8 @@ const Projects = () => {
                     <h2 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter uppercase">
                         Selected <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Works</span>
                     </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-                        Engineering digital solutions at the intersection of design and functionality.
+                    <p className="text-gray-400 max-w-2xl mx-auto text-lg h-[50px] md:h-auto flex items-center justify-center">
+                        <Typewriter text="Engineering digital solutions at the intersection of design and functionality." delay={600} />
                     </p>
                 </div>
 

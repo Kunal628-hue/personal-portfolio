@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { animate, stagger } from 'animejs';
+import Typewriter from '../components/Typewriter';
 
 const platforms = [
     {
@@ -65,7 +66,9 @@ const ProblemSolving = () => {
                     <h2 className="text-4xl md:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 mb-4 tracking-tighter uppercase">
                         Problem <span className="opacity-70">Solving</span>
                     </h2>
-                    <p className="text-gray-400 max-w-xl mx-auto">Mastering algorithms and logic through competitive programming platforms.</p>
+                    <p className="text-gray-400 max-w-xl mx-auto h-[50px] md:h-auto flex items-center justify-center">
+                        <Typewriter text="Mastering algorithms and logic through competitive programming platforms." delay={500} />
+                    </p>
                 </div>
 
                 <div className="max-w-4xl mx-auto flex justify-center problem-reveal opacity-0 h-full">

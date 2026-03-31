@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { animate, stagger } from 'animejs';
 import MagneticWrapper from '../components/MagneticWrapper';
 import Anime3DShapes from '../components/Anime3DShapes';
+import Typewriter from '../components/Typewriter';
 
 const HeroProfile = () => {
     const profileRef = useRef(null);
@@ -120,8 +121,8 @@ const Hero = () => {
                         <h3 className="hero-subtitle-text text-xl md:text-3xl font-black text-gray-100 mb-6 tracking-tight opacity-0">
                             Turning Code into <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Real-World Solutions</span>
                         </h3>
-                        <p className="hero-subtitle-text text-lg text-gray-400 leading-relaxed max-w-lg mx-auto md:mx-0 opacity-0 font-medium">
-                            B.Tech CSE Student | Software & Robotics Enthusiast building real-world solutions
+                        <p className="hero-subtitle-text text-lg text-gray-400 leading-relaxed max-w-lg mx-auto md:mx-0 opacity-0 font-medium h-[60px] md:h-auto">
+                            <Typewriter text="B.Tech CSE Student | Software & Robotics Enthusiast building real-world solutions" delay={1600} />
                         </p>
                     </div>
 

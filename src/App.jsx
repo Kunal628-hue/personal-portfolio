@@ -3,7 +3,6 @@ import CustomCursor from './components/CustomCursor';
 import ScrollProgress from './components/ScrollProgress';
 import BackgroundMusic from './components/BackgroundMusic';
 import AnimeBackground from './components/AnimeBackground';
-import PageLoader from './components/PageLoader';
 import Navbar from './components/Navbar';
 import CyberFooter from './components/CyberFooter';
 import Hero from './sections/Hero';
@@ -19,12 +18,13 @@ const Education = lazy(() => import('./sections/Education'));
 const Certifications = lazy(() => import('./sections/Certifications'));
 const Tools = lazy(() => import('./sections/Tools'));
 const ProblemSolving = lazy(() => import('./sections/ProblemSolving'));
+const GithubStats = lazy(() => import('./sections/GithubStats'));
 const Contact = lazy(() => import('./sections/Contact'));
 const Trading = lazy(() => import('./sections/Trading'));
 const Activities = lazy(() => import('./sections/Activities'));
+const TerminalIntro = lazy(() => import('./sections/TerminalIntro'));
 
 function App() {
-  const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -38,10 +38,7 @@ function App() {
   }, []);
 
   return (
-    <div className={`bg-[#030014] text-white min-h-screen selection:bg-blue-500 selection:text-white overflow-x-hidden relative ${!isMobile ? 'cursor-none' : ''} ${loading ? 'h-screen overflow-hidden' : ''}`}>
-      {loading && <PageLoader onComplete={() => setLoading(false)} />}
-      
-      {!loading && (
+    <div className={`bg-[#030014] text-white min-h-screen selection:bg-blue-500 selection:text-white overflow-x-hidden relative ${!isMobile ? 'cursor-none' : ''}`}>
         <>
           {/* Performance: Disable heavy mouse-followers on mobile for Lighthouse score */}
           {!isMobile && <CustomCursor />}
@@ -59,9 +56,11 @@ function App() {
           <main>
             <Hero />
             <Suspense fallback={<div className="h-96" />}>
+              <SectionReveal><TerminalIntro /></SectionReveal>
               <SectionReveal><About /></SectionReveal>
               <SectionReveal><Skills /></SectionReveal>
               <SectionReveal><ProblemSolving /></SectionReveal>
+              <SectionReveal><GithubStats /></SectionReveal>
               <SectionReveal><Tools /></SectionReveal>
               <SectionReveal><Projects /></SectionReveal>
               <SectionReveal><Activities /></SectionReveal>
@@ -74,7 +73,6 @@ function App() {
           </main>
           <CyberFooter />
         </>
-      )}
     </div>
   );
 }

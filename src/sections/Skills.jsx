@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { animate, stagger } from 'animejs';
 import TiltCard from '../components/TiltCard';
+import Typewriter from '../components/Typewriter';
 
 const skills = [
     { category: "Frontend", items: ["React", "Next.js", "Tailwind CSS", "HTML5", "CSS3", "JavaScript"], color: "blue" },
@@ -49,8 +50,8 @@ const Skills = () => {
                     <h2 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter">
                         TECHNICAL <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">ARSENAL</span>
                     </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-                        Mastering the intersection of sophisticated software and tangible hardware.
+                    <p className="text-gray-400 max-w-2xl mx-auto text-lg h-[40px] md:h-auto">
+                        <Typewriter text="Mastering the intersection of sophisticated software and tangible hardware." delay={800} />
                     </p>
                 </div>
 
