@@ -49,7 +49,7 @@ const TerminalIntro = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className="py-20 bg-[#030014] text-white relative z-10">
+        <section ref={sectionRef} className="pt-20 pb-0 bg-[#030014] text-white relative z-10">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 {/* Terminal Window */}

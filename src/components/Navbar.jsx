@@ -9,9 +9,9 @@ const Navbar = () => {
     const itemRef = useRef(null);
 
     const navItems = [
-        { name: 'About', href: '#about' },
         { name: 'Skills', href: '#skills' },
         { name: 'Projects', href: '#projects' },
+
         { name: 'Contact', href: '#contact' },
     ];
 
@@ -49,6 +49,8 @@ const Navbar = () => {
                                 <MagneticWrapper key={item.name} className="inline-block nav-item opacity-0">
                                     <a
                                         href={item.href}
+                                        target={item.newTab ? "_blank" : "_self"}
+                                        rel={item.newTab ? "noopener noreferrer" : ""}
                                         className="relative group py-2 text-sm font-medium text-gray-400 transition-colors hover:text-white"
                                     >
                                         {item.name}
@@ -78,6 +80,8 @@ const Navbar = () => {
                             <a
                                 key={item.name}
                                 href={item.href}
+                                target={item.newTab ? "_blank" : "_self"}
+                                rel={item.newTab ? "noopener noreferrer" : ""}
                                 className="block px-4 py-3 rounded-xl text-lg font-bold text-gray-300 hover:text-white hover:bg-white/5 transition-all"
                                 onClick={() => setIsOpen(false)}
                             >

@@ -9,8 +9,6 @@ import Hero from './sections/Hero';
 import SectionReveal from './components/SectionReveal';
 import StockTicker from './components/StockTicker';
 
-// Lazy load sections below the fold
-const About = lazy(() => import('./sections/About'));
 const Skills = lazy(() => import('./sections/Skills'));
 const Projects = lazy(() => import('./sections/Projects'));
 const Experience = lazy(() => import('./sections/Experience'));
@@ -23,6 +21,7 @@ const Contact = lazy(() => import('./sections/Contact'));
 const Trading = lazy(() => import('./sections/Trading'));
 const Activities = lazy(() => import('./sections/Activities'));
 const TerminalIntro = lazy(() => import('./sections/TerminalIntro'));
+const Resume = lazy(() => import('./sections/Resume'));
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -48,16 +47,14 @@ function App() {
           {!isMobile && <StockTicker />}
           
           <BackgroundMusic />
-          
-          {/* Higher-impact performance background for all but lower density on mobile internal */}
           <AnimeBackground />
           
           <Navbar />
+          
           <main>
             <Hero />
             <Suspense fallback={<div className="h-96" />}>
               <SectionReveal><TerminalIntro /></SectionReveal>
-              <SectionReveal><About /></SectionReveal>
               <SectionReveal><Skills /></SectionReveal>
               <SectionReveal><ProblemSolving /></SectionReveal>
               <SectionReveal><GithubStats /></SectionReveal>
@@ -68,9 +65,11 @@ function App() {
               <SectionReveal><Experience /></SectionReveal>
               <SectionReveal><Education /></SectionReveal>
               <SectionReveal><Certifications /></SectionReveal>
+              <SectionReveal><Resume /></SectionReveal>
               <SectionReveal><Contact /></SectionReveal>
             </Suspense>
           </main>
+          
           <CyberFooter />
         </>
     </div>

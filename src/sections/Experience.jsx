@@ -4,6 +4,13 @@ import { Calendar } from 'lucide-react';
 
 const experiences = [
     {
+        role: "Admin",
+        company: "Coder's OG's",
+        period: "Feb 2026 - Present",
+        description: "Leading and managing an open builders community focused on collaboration, open-source contribution, and real-world project development.",
+        logo: "/coders_og_logo.png"
+    },
+    {
         role: "Hackathon Participant",
         company: "MLH (Major League Hacking)",
         period: "15 Nov 2025",
@@ -70,7 +77,16 @@ const Experience = () => {
                                 </span>
                             </div>
                             <div className="flex-1 glass-dark p-8 rounded-2xl border border-white/5 hover:border-blue-500/30 transition-all ml-4 md:ml-0 group">
-                                <h3 className="text-2xl font-black text-white mb-2 tracking-tight group-hover:text-blue-400 transition-colors uppercase">{exp.role}</h3>
+                                <div className="flex justify-between items-start mb-2">
+                                    <h3 className="text-2xl font-black text-white tracking-tight group-hover:text-blue-400 transition-colors uppercase">{exp.role}</h3>
+                                    {exp.logo && (
+                                        <img 
+                                            src={exp.logo} 
+                                            alt={exp.company} 
+                                            className="w-14 h-14 rounded-xl object-cover border border-white/10 p-1 bg-black/50 shadow-xl group-hover:scale-110 transition-transform duration-500" 
+                                        />
+                                    )}
+                                </div>
                                 <h4 className="text-blue-300 mb-6 text-sm font-bold tracking-widest uppercase">{exp.company}</h4>
                                 <p className="text-gray-400 leading-relaxed text-lg">
                                     {exp.description}

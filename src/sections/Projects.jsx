@@ -10,7 +10,7 @@ const largeScaleProjects = [
         tags: ["HTML", "CSS", "JavaScript"],
         links: {
             github: "https://github.com/aneek22112007-tech/OJT-2025-Persistent-Notes-Workspace-with-Search-Tags.git",
-            demo: "https://ojt-2025-persistent-notes-workspace-three.vercel.app/index.html"
+            demo: "https://global-notes-workspace.vercel.app/"
         }
     },
     {

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Code, Users, TrendingUp, Award, Trophy, Activity } from 'lucide-react';
 
-const ActivityCard = ({ title, description, icon: Icon, color, delay, tags }) => {
+const ActivityCard = ({ title, description, icon: Icon, image, color, delay, tags }) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -14,8 +14,8 @@ const ActivityCard = ({ title, description, icon: Icon, color, delay, tags }) =>
         >
             <div className={`absolute -right-10 -top-10 w-32 h-32 bg-${color}-500/10 rounded-full blur-3xl group-hover:bg-${color}-500/20 transition-colors`} />
 
-            <div className={`w-14 h-14 rounded-2xl bg-${color}-500/20 flex items-center justify-center mb-6 text-${color}-400 group-hover:scale-110 transition-transform`}>
-                <Icon size={32} />
+            <div className={`w-14 h-14 rounded-2xl bg-${color}-500/20 flex items-center justify-center mb-6 text-${color}-400 group-hover:scale-110 transition-transform overflow-hidden`}>
+                {image ? <img src={image} alt={title} className="w-full h-full object-cover" /> : <Icon size={32} />}
             </div>
 
             <h3 className="text-2xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 group-hover:from-white group-hover:to-white transition-all">
@@ -69,11 +69,11 @@ const Activities = () => {
                     {/* Communities */}
                     <ActivityCard
                         title="Tech Communities"
-                        description="Active participant in dev communities, sharing knowledge and learning from peers."
-                        icon={Users}
+                        description="Admin at Coder's OG's. Active participant in dev communities, sharing knowledge and learning from peers."
+                        image="/coders_og_logo.png"
                         color="green"
                         delay={0.1}
-                        tags={["Networking", "Mentorship"]}
+                        tags={["Community Lead", "Networking", "Mentorship"]}
                     />
 
                     {/* Trading */}
