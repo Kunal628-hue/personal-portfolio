@@ -14,7 +14,7 @@ import {
     Zap
 } from 'lucide-react';
 
-const ToolCard = ({ icon: Icon, name, color }) => (
+const ToolCard = ({ icon: Icon, name }) => (
     <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-full mx-4 min-w-[180px] hover:bg-white/10 hover:border-blue-500/30 transition-all duration-300 pointer-events-auto">
         <div className={`p-2 rounded-full bg-blue-500/10`}>
             <Icon size={18} className="text-blue-400" />

@@ -63,7 +63,7 @@ const roboticsProjects = [
     }
 ];
 
-const ProjectCard = ({ project, index, compact = false }) => {
+const ProjectCard = ({ project, compact = false }) => {
     const cardRef = useRef(null);
 
     const handleMouseMove = (e) => {

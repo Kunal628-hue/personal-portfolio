@@ -36,7 +36,7 @@ const About = () => {
                             About Me
                         </h2>
                         <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-                            I am a first-year B.Tech Computer Science student with a strong interest in building practical software solutions. My journey into technology started with curiosity about how systems work, which gradually expanded into programming, problem-solving, and robotics.
+                            I build software with a strong interest in building practical software solutions. My journey into technology started with curiosity about how systems work, which gradually expanded into programming, problem-solving, and robotics.
                         </p>
                         <p className="text-lg text-gray-300 mb-8 leading-relaxed">
                             I work with languages and tools like Python, Java, SQL, and modern web technologies, and I enjoy applying logic to real-world challenges—whether through software applications, data-driven systems, or robotics projects. I am continuously learning and experimenting to build a strong foundation for future roles in software and technology.
@@ -49,7 +49,7 @@ const About = () => {
                                 </div>
                                 <div>
                                     <h4 className="font-bold">Computer Science</h4>
-                                    <p className="text-sm text-gray-400">Honors Student</p>
+                                    <p className="text-sm text-gray-400">Honors</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4 p-4 glass rounded-2xl">

@@ -1,13 +1,14 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { animate } from 'animejs';
 
 const MagneticWrapper = ({ children, className }) => {
     const ref = useRef(null);
+    const attachRef = useCallback(node => { ref.current = node; }, []);
 
     useEffect(() => {
         if (window.innerWidth < 1024) return;
         if (!ref.current) return;
-        
+
         const element = ref.current;
 
         const handleMouseMove = (e) => {
@@ -44,9 +45,11 @@ const MagneticWrapper = ({ children, className }) => {
         };
     }, []);
 
-    return React.cloneElement(children, { 
-        ref, 
-        className: `${children.props.className || ''} ${className || ''} interactive magnetic select-none transition-shadow` 
+    // cloneElement forwards this callback ref; it does not read ref.current during render.
+    // eslint-disable-next-line react-hooks/refs
+    return React.cloneElement(children, {
+        ref: attachRef,
+        className: `${children.props.className || ''} ${className || ''} interactive magnetic select-none transition-shadow`
     });
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Award } from 'lucide-react';
 import { Canvas } from '@react-three/fiber';
 import { Float, Center, Text3D } from '@react-three/drei';
@@ -37,7 +37,7 @@ const certifications = [
 
 const CertCard3D = ({ cert, index }) => {
     return (
-        <motion.div
+        <Motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -58,13 +58,13 @@ const CertCard3D = ({ cert, index }) => {
 
             <div className="relative z-10 p-8 flex flex-col items-center text-center h-full">
                 {/* Floating Icon */}
-                <motion.div
+                <Motion.div
                     animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index }}
                     className={`p-4 rounded-full bg-gradient-to-br ${cert.color} mb-6 shadow-lg`}
                 >
                     <Award className="text-white" size={32} />
-                </motion.div>
+                </Motion.div>
 
                 <h3 className="text-xl font-bold text-white mb-2">{cert.title}</h3>
                 <p className="text-gray-400 text-sm mb-4">{cert.issuer}</p>
@@ -76,7 +76,7 @@ const CertCard3D = ({ cert, index }) => {
 
             {/* Shine Effect */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none bg-gradient-to-tr from-white/5 to-transparent z-20" />
-        </motion.div>
+        </Motion.div>
     )
 }
 
@@ -84,14 +84,14 @@ const Certifications = () => {
     return (
         <section className="py-20 bg-black text-white relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
+                <Motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     className="mb-16 text-center"
                 >
                     <h2 className="text-4xl font-bold mb-4">Certifications</h2>
                     <div className="h-1 w-20 bg-blue-500 mx-auto rounded-full" />
-                </motion.div>
+                </Motion.div>
 
                 <div className="flex flex-wrap justify-center gap-8 perspective-[2000px]">
                     {certifications.map((cert, index) => (

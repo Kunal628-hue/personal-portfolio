@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Mail, Linkedin, Github } from 'lucide-react';
 import Bitcoin3D from '../components/Bitcoin3D';
 
@@ -7,7 +7,7 @@ const Contact = () => {
     return (
         <section id="contact" className="py-20 bg-black text-white overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
+                <Motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
@@ -15,13 +15,13 @@ const Contact = () => {
                 >
                     <h2 className="text-4xl md:text-5xl font-bold mb-4">Get In <span className="text-blue-500">Touch</span></h2>
                     <p className="text-gray-400">Feel free to reach out for collaborations or just a friendly hello</p>
-                </motion.div>
+                </Motion.div>
 
                 <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-12">
 
                     {/* Contact Links */}
                     <div className="w-full md:w-1/2 flex flex-col gap-6">
-                        <motion.a
+                        <Motion.a
                             href="mailto:imsinghi2016@gmail.com"
                             initial={{ x: -50, opacity: 0 }}
                             whileInView={{ x: 0, opacity: 1 }}
@@ -35,9 +35,9 @@ const Contact = () => {
                                 <h3 className="text-lg font-bold">Email</h3>
                                 <p className="text-gray-400 text-sm">imsinghi2016@gmail.com</p>
                             </div>
-                        </motion.a>
+                        </Motion.a>
 
-                        <motion.a
+                        <Motion.a
                             href="https://www.linkedin.com/in/kunal-singhi-jain-2b3329386/"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -54,9 +54,9 @@ const Contact = () => {
                                 <h3 className="text-lg font-bold">LinkedIn</h3>
                                 <p className="text-gray-400 text-sm">Connect with me</p>
                             </div>
-                        </motion.a>
+                        </Motion.a>
 
-                        <motion.a
+                        <Motion.a
                             href="https://github.com/Kunal628-hue"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -73,18 +73,18 @@ const Contact = () => {
                                 <h3 className="text-lg font-bold">GitHub</h3>
                                 <p className="text-gray-400 text-sm">Explore my code</p>
                             </div>
-                        </motion.a>
+                        </Motion.a>
                     </div>
 
                     {/* 3D Bitcoin */}
-                    <motion.div
+                    <Motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8 }}
                         className="w-full md:w-1/2 flex justify-center"
                     >
                         <Bitcoin3D />
-                    </motion.div>
+                    </Motion.div>
 
                 </div>
 

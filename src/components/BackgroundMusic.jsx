@@ -19,7 +19,7 @@ const BackgroundMusic = () => {
                 // but we keep it asynchronous.
                 await audio.play();
                 setIsPlaying(true);
-            } catch (err) {
+            } catch {
                 setIsPlaying(false);
             }
         };

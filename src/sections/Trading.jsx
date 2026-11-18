@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import Market3D from '../components/Market3D';
 import { LineChart, BarChart2, TrendingUp } from 'lucide-react';
 
@@ -13,7 +13,7 @@ const Trading = () => {
                 <div className="flex flex-col md:flex-row items-center gap-12">
 
                     {/* Text Content */}
-                    <motion.div
+                    <Motion.div
                         initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
@@ -57,10 +57,10 @@ const Trading = () => {
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </Motion.div>
 
                     {/* 3D Visualization */}
-                    <motion.div
+                    <Motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8 }}
@@ -71,7 +71,7 @@ const Trading = () => {
                         <div className="absolute bottom-4 right-4 text-xs text-gray-500 font-mono">
                             Live Market Structure Visualization
                         </div>
-                    </motion.div>
+                    </Motion.div>
 
                 </div>
             </div>

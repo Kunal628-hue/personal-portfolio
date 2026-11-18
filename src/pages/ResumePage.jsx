@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Mail, Phone, Github, Linkedin, ArrowLeft, Download, ExternalLink, GraduationCap, Briefcase, Award, Code, Database, MousePointer2 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 
 const ResumePage = ({ onBack }) => {
     useEffect(() => {
@@ -49,7 +49,7 @@ const ResumePage = ({ onBack }) => {
         <div className="min-h-screen bg-white text-gray-900 font-sans p-4 md:p-8 lg:p-12 selection:bg-blue-100 pb-24">
             {/* Control Bar */}
             <div className="max-w-4xl mx-auto mb-12 flex justify-between items-center no-print">
-                <button 
+                <button
                     onClick={onBack}
                     className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all rounded-lg"
                 >
@@ -57,7 +57,7 @@ const ResumePage = ({ onBack }) => {
                     Back to Portfolio
                 </button>
                 <div className="flex gap-4">
-                    <button 
+                    <button
                         onClick={() => window.print()}
                         className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-200"
                     >
@@ -68,7 +68,7 @@ const ResumePage = ({ onBack }) => {
             </div>
 
             {/* Resume Sheet */}
-            <motion.div 
+            <Motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="max-w-4xl mx-auto bg-white p-8 md:p-16 border border-gray-100 shadow-[0_0_50px_rgba(0,0,0,0.05)] rounded-2xl relative overflow-hidden"
@@ -76,8 +76,8 @@ const ResumePage = ({ onBack }) => {
                 {/* Header */}
                 <header className="text-center mb-12 border-b border-gray-100 pb-12">
                     <h1 className="text-5xl font-black text-gray-900 mb-4 tracking-tighter uppercase">Kunal Singhi</h1>
-                    <p className="text-lg text-blue-600 font-bold mb-8 uppercase tracking-[0.2em]">Software Development Student | Aspiring Full Stack Developer</p>
-                    
+                    <p className="text-lg text-blue-600 font-bold mb-8 uppercase tracking-[0.2em]">Software Development | Aspiring Full Stack Developer</p>
+
                     <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm font-medium text-gray-500">
                         <a href="tel:+919246269410" className="flex items-center gap-2 hover:text-blue-600 transition-colors"><Phone size={14} /> +91 9246269410</a>
                         <a href="mailto:imsinghi2016@gmail.com" className="flex items-center gap-2 hover:text-blue-600 transition-colors"><Mail size={14} /> imsinghi2016@gmail.com</a>
@@ -183,7 +183,7 @@ const ResumePage = ({ onBack }) => {
                 <div className="absolute bottom-0 right-0 p-8 opacity-5">
                     <MousePointer2 size={120} />
                 </div>
-            </motion.div>
+            </Motion.div>
         </div>
     );
 };

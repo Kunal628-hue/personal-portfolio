@@ -31,13 +31,11 @@ const Word = ({ children, ...props }) => {
     )
 }
 
-const Cloud = ({ count = 4, radius = 23, words }) => {
+const Cloud = ({ radius = 23, words }) => {
     // Create a spherical distribution
     const keywords = useMemo(() => {
         const temp = []
         const spherical = new THREE.Spherical()
-        const phiSpan = Math.PI / (words.length + 1)
-        const thetaSpan = (Math.PI * 2) / words.length
 
         for (let i = 0; i < words.length; i++) {
             // distribute points on a sphere
@@ -52,7 +50,7 @@ const Cloud = ({ count = 4, radius = 23, words }) => {
             temp.push([new THREE.Vector3().setFromSpherical(spherical.set(r, phi, theta)), words[i]])
         }
         return temp
-    }, [count, radius, words])
+    }, [radius, words])
     return keywords.map(([pos, word], index) => <Word key={index} position={pos} children={word} />)
 }
 

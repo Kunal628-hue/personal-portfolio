@@ -1,98 +1,189 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X } from 'lucide-react';
-import { animate, stagger } from 'animejs';
-import MagneticWrapper from './MagneticWrapper';
-
-const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const navRef = useRef(null);
-    const itemRef = useRef(null);
-
-    const navItems = [
-        { name: 'Skills', href: '#skills' },
-        { name: 'Projects', href: '#projects' },
-
-        { name: 'Contact', href: '#contact' },
-    ];
-
-    useEffect(() => {
-        animate('.nav-item', {
-            translateY: [-20, 0],
-            opacity: [0, 1],
-            delay: stagger(100, { start: 500 }),
-            ease: 'easeOutExpo',
-            duration: 1000
-        });
-
-        animate('.nav-logo', {
-            translateX: [-20, 0],
-            opacity: [0, 1],
-            ease: 'easeOutExpo',
-            duration: 1000,
-            delay: 300
-        });
-    }, []);
-
-    return (
-        <nav ref={navRef} className="fixed w-full z-[100] bg-[#030014]/40 backdrop-blur-xl border-b border-white/5">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-20">
-                    <div className="flex-shrink-0 nav-logo opacity-0">
-                        <a href="#" className="text-2xl font-black bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent tracking-tighter hover:scale-105 transition-transform">
-                            KUNAL<span className="text-white/20">.</span>SINGHI
-                        </a>
-                    </div>
-
-                    <div className="hidden md:block">
-                        <div className="ml-10 flex items-center space-x-8">
-                            {navItems.map((item) => (
-                                <MagneticWrapper key={item.name} className="inline-block nav-item opacity-0">
-                                    <a
-                                        href={item.href}
-                                        target={item.newTab ? "_blank" : "_self"}
-                                        rel={item.newTab ? "noopener noreferrer" : ""}
-                                        className="relative group py-2 text-sm font-medium text-gray-400 transition-colors hover:text-white"
-                                    >
-                                        {item.name}
-                                        <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
-                                    </a>
-                                </MagneticWrapper>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="md:hidden">
-                        <button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="p-2 rounded-full text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
-                        >
-                            {isOpen ? <X size={24} /> : <Menu size={24} />}
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            {/* Mobile menu */}
-            {isOpen && (
-                <div className="md:hidden bg-[#030014]/95 backdrop-blur-2xl border-b border-white/5">
-                    <div className="px-4 pt-2 pb-6 space-y-2">
-                        {navItems.map((item) => (
-                            <a
-                                key={item.name}
-                                href={item.href}
-                                target={item.newTab ? "_blank" : "_self"}
-                                rel={item.newTab ? "noopener noreferrer" : ""}
-                                className="block px-4 py-3 rounded-xl text-lg font-bold text-gray-300 hover:text-white hover:bg-white/5 transition-all"
-                                onClick={() => setIsOpen(false)}
-                            >
-                                {item.name}
-                            </a>
-                        ))}
-                    </div>
-                </div>
-            )}
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion as Motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, Plus, Github, Linkedin } from "lucide-react";
+const links = [
+  ["Home", "#hero"],
+  ["About", "#about"],
+  ["Expertise", "#skills"],
+  ["Work", "#projects"],
+  ["Contact", "#contact"],
+];
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const overlayRef = useRef(null),
+    toggleRef = useRef(null);
+  const reduced = useReducedMotion();
+  const closeMenu = () => {
+    setOpen(false);
+    toggleRef.current?.focus({ preventScroll: true });
+  };
+  useEffect(() => {
+    if (!open) return;
+    const main = document.getElementById("main-content");
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    if (main) main.inert = true;
+    overlayRef.current?.querySelector("a")?.focus({ preventScroll: true });
+    const keyboard = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus({ preventScroll: true });
+      }
+      if (event.key !== "Tab") return;
+      const controls = overlayRef.current?.querySelectorAll("a[href],button");
+      if (!controls?.length) return;
+      const first = controls[0],
+        last = controls[controls.length - 1];
+      if (
+        event.shiftKey &&
+        (document.activeElement === first ||
+          !overlayRef.current.contains(document.activeElement))
+      ) {
+        event.preventDefault();
+        last.focus();
+      }
+      if (
+        !event.shiftKey &&
+        (document.activeElement === last ||
+          !overlayRef.current.contains(document.activeElement))
+      ) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", keyboard);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      if (main) main.inert = false;
+      window.removeEventListener("keydown", keyboard);
+    };
+  }, [open]);
+  return (
+    <>
+      <header className="site-header">
+        <a
+          className="site-logo"
+          data-section-transition
+          href="#hero"
+          aria-label="Kunal Singhi home"
+        >
+          Kunal<span>®</span>
+        </a>
+        <nav className="desktop-nav" aria-label="Main navigation">
+          {links.map(([label, href]) => (
+            <a key={href} href={href} data-section-transition>
+              {label}
+            </a>
+          ))}
         </nav>
-    );
-};
-
-export default Navbar;
+        <button
+          ref={toggleRef}
+          className="menu-toggle"
+          aria-label={open ? "Close navigation" : "Open navigation"}
+          aria-expanded={open}
+          aria-controls="main-navigation"
+          onClick={() => setOpen(!open)}
+        >
+          <span className="menu-lines" aria-hidden="true">
+            <span />
+            <span />
+          </span>
+        </button>
+      </header>
+      <AnimatePresence>
+        {open && (
+          <Motion.div
+            className="navigation-overlay"
+            ref={overlayRef}
+            id="main-navigation"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
+            initial={
+              reduced ? false : { opacity: 0, clipPath: "inset(0 0 100% 0)" }
+            }
+            animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
+            exit={
+              reduced
+                ? { opacity: 0 }
+                : { opacity: 0, clipPath: "inset(0 0 100% 0)" }
+            }
+            transition={{
+              duration: reduced ? 0 : 0.5,
+              ease: [0.76, 0, 0.24, 1],
+            }}
+          >
+            <div className="overlay-top">
+              <a
+                className="site-logo"
+                href="#hero"
+                onClick={closeMenu}
+                data-section-transition
+              >
+                Kunal<span>®</span>
+              </a>
+              <button
+                className="overlay-close"
+                aria-label="Close navigation"
+                onClick={closeMenu}
+              >
+                ×
+              </button>
+            </div>
+            <div className="overlay-body">
+              <nav aria-label="Expanded navigation">
+                {links.map(([label, href], i) => (
+                  <Motion.a
+                    key={href}
+                    href={href}
+                    onClick={closeMenu}
+                    data-section-transition
+                    initial={reduced ? false : { opacity: 0, y: 25 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.45,
+                      delay: reduced ? 0 : 0.15 + i * 0.055,
+                    }}
+                  >
+                    {label}
+                    <Plus size={23} />
+                  </Motion.a>
+                ))}
+              </nav>
+              <div className="overlay-details">
+                <span className="eyebrow">GET IN TOUCH</span>
+                <a href="mailto:imsinghi2016@gmail.com">
+                  imsinghi2016@gmail.com <ArrowUpRight size={15} />
+                </a>
+                <span className="eyebrow">SOFTWARE & ROBOTICS</span>
+                <p>
+                  B.Tech CSE
+                  <br />
+                  Admin @ Coder&apos;s OG&apos;s
+                </p>
+                <div>
+                  <a
+                    href="https://github.com/Kunal628-hue"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub"
+                  >
+                    <Github size={19} />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/kunal-singhi-jain-2b3329386/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin size={19} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </Motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}

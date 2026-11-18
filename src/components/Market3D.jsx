@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { animate, stagger } from 'animejs';
 
 const Market3DReplacement = () => {
     const containerRef = useRef(null);
+    const [candleData] = useState(() => Array.from({length:12}, () => ({isUp:Math.random()>.4,height:40+Math.random()*80,yPos:30+Math.random()*40})));
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -35,10 +36,7 @@ const Market3DReplacement = () => {
         });
     }, []);
 
-    const candles = Array.from({ length: 12 }).map((_, i) => {
-        const isUp = Math.random() > 0.4;
-        const height = 40 + Math.random() * 80;
-        const yPos = 30 + Math.random() * 40;
+    const candles = candleData.map(({isUp,height,yPos}, i) => {
         
         return (
             <div 
